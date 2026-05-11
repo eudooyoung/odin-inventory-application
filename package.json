@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.2",
+    "pg": "^8.20.0"
+  },
+  "name": "odin-express-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.ts",
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0",
+    "@types/pg": "^8.20.0",
+    "prettier": "3.8.3",
+    "prettier-plugin-ejs": "^1.0.3",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm install && tsc && cp -r src/views dist/",
+    "start": "node dist/app.js",
+    "dev": "tsx --watch --env=.env src/app.ts",
+    "prettier:e": "prettier --plugin=prettier-plugin-ejs --write **/*.ejs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
