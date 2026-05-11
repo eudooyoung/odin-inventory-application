@@ -2,107 +2,108 @@
 
 ## DB design
 
-| categories |                 |
-| ---------- | --------------- |
-| id         | int primary key |
-| name       | varchar ( 50 )  |
+| category    |                |
+| ----------- | -------------: |
+| category_id |     int **PK** |
+| name        | varchar ( 50 ) |
 
-| items       |                 |
-| ----------- | --------------- |
-| id          | int primary key |
-| category_id | int foreign key |
-| name        | varchar ( 50 )  |
+**categories**
 
-| towel         |                 |
-| ------------- | --------------- |
-| id            | int primary key |
-| item_id       | int foreign key |
-| name          | varchar ( 50 )  |
-| layers        | int             |
-| pre_washing   | boolean         |
-| border_stitch | boolean         |
-| gift_stitch   | boolean         |
-| gift_wrap     | boolean         |
-| price         | int             |
+- bath
+- kitchen
+- bedroom
+- daily
+- nursery
 
-| dish_towel    |                 |
-| ------------- | --------------- |
-| id            | int primary key |
-| item_id       | int foreign key |
-| name          | varchar ( 50 )  |
-| size          | varchar ( 5 )   |
-| pre_washing   | boolean         |
-| border_stitch | boolean         |
-| gift_stitch   | boolean         |
-| gift_wrap     | boolean         |
-| price         | int             |
+| product     |                |
+| ----------- | -------------: |
+| product_id  |     int **PK** |
+| category_id |     int **FK** |
+| name        | varchar ( 50 ) |
 
-| hand_towel   |                 |
-| ------------- | --------------- |
-| id            | int primary key |
-| item_id       | foreign key     |
-| name          | varchar ( 50 )  |
-| layers        | int             |
-| size          | varchar ( 5 )   |
-| pre_washing   | boolean         |
-| border_stitch | boolean         |
-| gift_stitch   | boolean         |
-| gift_wrap     | boolean         |
-| price         | int             |
+**products**
 
-| pillow_cover  |                 |
-| ------------- | --------------- |
-| id            | int primary key |
-| item_id       | int foreign key |
-| name          | varchar ( 50 )  |
-| size          | varchar ( 5 )   |
-| border_stitch | boolean         |
-| gift_stitch   | boolean         |
-| gift_wrap     | boolean         |
-| price         | int             |
+- towel
+- dish_towel
+- hand_towel
+- pillow_cover
+- sanitary
+- mat
+- nusring_pads
+- diaper
 
-| sanitary      |                 |
-| ------------- | --------------- |
-| id            | int primary key |
-| item_id       | id foreign key  |
-| name          | varchar ( 50 )  |
-| size          | varchar ( 5 )   |
-| pre_washing   | boolean         |
-| border_stitch | boolean         |
-| gift_stitch   | boolean         |
-| gift_wrap     | boolean         |
-| price         | int             |
+| towel      |                |
+| ---------- | -------------: |
+| towel_id   |     int **PK** |
+| product_id |     int **FK** |
+| name       | varchar ( 50 ) |
+| layers     |            int |
+| price      |            int |
 
-| bath_mat      |                 |
-| ------------- | --------------- |
-| id            | int primary key |
-| item_id       | int foreign key |
-| name          | varchar ( 50 )  |
-| size          | varchar ( 5 )   |
-| pre_washing   | boolean         |
-| border_stitch | boolean         |
-| gift_stitch   | boolean         |
-| gift_wrap     | boolean         |
-| price         | int             |
+| dish_towel    |                |
+| ------------- | -------------: |
+| dish_towel_id |     int **PK** |
+| product_id    |     int **FK** |
+| name          | varchar ( 50 ) |
+| size          |  varchar ( 5 ) |
+| price         |            int |
 
-| nursery     |                 |
-| ----------- | --------------- |
-| id          | int primary key |
-| item_id     | id foreign key  |
-| name        | varchar ( 50 )  |
-| set         | int             |
-| pre_washing | boolean         |
-| gift_stitch | boolean         |
-| gift_wrap   | boolean         |
-| price       | int             |
+| hand_towel    |                |
+| ------------- | -------------: |
+| hand_towel_id |     int **PK** |
+| product_id    |         **FK** |
+| name          | varchar ( 50 ) |
+| layers        |            int |
+| size          |  varchar ( 5 ) |
+| price         |            int |
 
-| diaper      |                 |
-| ----------- | --------------- |
-| id          | int primary key |
-| item_id     | int foreign key |
-| name        | varchar ( 50 )  |
-| size        | varchar ( 5 )   |
-| pre_washing | boolean         |
-| gift_stitch | boolean         |
-| gift_wrap   | boolean         |
-| price       | int             |
+| pillow_cover    |                |
+| --------------- | -------------: |
+| pillow_cover_id |     int **PK** |
+| product_id      |     int **FK** |
+| name            | varchar ( 50 ) |
+| size            |  varchar ( 5 ) |
+| price           |            int |
+
+| sanitary    |                |
+| ----------- | -------------: |
+| sanitary_id |     int **PK** |
+| product_id  |      id **FK** |
+| name        | varchar ( 50 ) |
+| size        |  varchar ( 5 ) |
+| price       |            int |
+
+| mat        |                |
+| ---------- | -------------: |
+| mat_id     |     int **PK** |
+| product_id |     int **FK** |
+| name       | varchar ( 50 ) |
+| size       |  varchar ( 5 ) |
+| price      |            int |
+
+| nursing_pads    |                |
+| --------------- | -------------: |
+| nursing_pads_id |     int **PK** |
+| product_id      |     int **FK** |
+| name            | varchar ( 50 ) |
+| set             |            int |
+| price           |            int |
+
+| diaper     |                |
+| ---------- | -------------: |
+| diaper_id  |     int **PK** |
+| product_id |     int **FK** |
+| name       | varchar ( 50 ) |
+| size       |  varchar ( 5 ) |
+| price      |            int |
+
+---
+
+| option      |            |
+| ----------- | ---------: |
+| option_id   | int **PK** |
+| product_id  | int **FK** |
+| pre_wash    |    boolean |
+| gift_stitch |    boolean |
+| gift_wrap   |    boolean |
+| price       |    integer |
