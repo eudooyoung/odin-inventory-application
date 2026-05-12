@@ -22,8 +22,8 @@
 | ----------- | ----------: |
 | product_id  |  int **PK** |
 | category_id |  int **FK** |
-| option_id   |  int **FK** |
 | name        |     varchar |
+| price       |         int |
 | created_at  | timestamptz |
 
 **products**
@@ -39,14 +39,23 @@
 
 ---
 
-| option     |             |
-| ---------- | ----------: |
-| option_id  |  int **PK** |
-| name       |     varchar |
-| created_at | timestamptz |
+| common_option |             |
+| ------------- | ----------: |
+| option_id     |  int **PK** |
+| name          |     varchar |
+| price         |         int |
+| created_at    | timestamptz |
 
-**options**
+**common options**
 
 - pre_wash
+- border_stitch
 - gift_stitch
 - gift_wrap
+
+---
+
+| product_common_option |            |
+| --------------------- | ---------: |
+| product_id            | int **FK** |
+| option_id             | int **FK** |
