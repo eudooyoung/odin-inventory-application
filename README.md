@@ -39,12 +39,12 @@
 
 ---
 
-| common_option |             |
-| ------------- | ----------: |
-| option_id     |  int **PK** |
-| name          |     varchar |
-| price         |         int |
-| created_at    | timestamptz |
+| option     |             |
+| ---------- | ----------: |
+| option_id  |  int **PK** |
+| name       |     varchar |
+| price      |         int |
+| created_at | timestamptz |
 
 **common options**
 
@@ -55,7 +55,7 @@
 
 ---
 
-| product_common_option |            |
-| --------------------- | ---------: |
-| product_id            | int **FK** |
-| option_id             | int **FK** |
+| product_option |            |
+| -------------- | ---------: |
+| product_id     | int **FK** |
+| option_id      | int **FK** |
