@@ -94,7 +94,7 @@
 | nursing_pads_id |     int **PK** |
 | product_id      |     int **FK** |
 | name            | varchar ( 50 ) |
-| set             |            int |
+| sets            |            int |
 | price           |            int |
 | created_at      |    timestamptz |
 

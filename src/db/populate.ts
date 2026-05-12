@@ -145,3 +145,40 @@ create table if not exists diaper (
         on delete cascade
 );
 `;
+
+const main = async () => {
+  console.log("seeding...");
+  let client: pg.Client;
+  if (process.argv[2] === "local") {
+    console.log("building client for local db...");
+    client = new pg.Client({
+      connectionString: process.env.LOCAL_DB_URL,
+    });
+  } else {
+    console.log("building client for remote db...");
+    client = new pg.Client({
+      user: process.env.REMOTE_DB_USER,
+      password: process.env.REMOTE_DB_PW,
+      host: process.env.REMOTE_DB_HOST,
+      port: Number(process.env.REMOTE_DB_PORT),
+      database: process.env.REMOTE_DB_NAME,
+      ssl: {
+        rejectUnauthorized: true,
+        ca: fs.readFileSync("./ca.pem").toString(),
+      },
+    });
+  }
+  console.log("client built...");
+  try {
+    await client.connect();
+    console.log("client connected to db...");
+    await client.query(SQL);
+    console.log("tables successfully populated!");
+  } catch (err) {
+    console.error(err);
+  } finally {
+    await client.end();
+  }
+};
+
+main();
