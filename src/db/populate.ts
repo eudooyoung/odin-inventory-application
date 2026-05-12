@@ -4,9 +4,12 @@ import pg = require("pg");
 import fs = require("node:fs");
 
 const SQL = `
+set timezone = 'Asia/Seoul';
+
 create table if not exists category (
     category_id int primary key generated always as identity,
-    name varchar ( 50 ) not null
+    name varchar ( 50 ) not null unique,
+    created_at timestamptz default now()
 );
 
 insert into category (name)
@@ -19,10 +22,12 @@ values ('bath')
 create table if not exists product (
     product_id int primary key generated always as identity,
     category_id int not null,
-    name varchar ( 50 ) not null,
-        constraint fk_category
-            foreign key(category_id)
-                references category(category_id)
+    name varchar ( 50 ) not null unique,
+    created_at timestamptz default now(),
+    constraint fk_category
+        foreign key(category_id)
+        references category(category_id)
+        on delete cascade
 );
 
 insert into product (category_id, name)
@@ -38,26 +43,105 @@ values (1, 'towel')
 create table if not exists towel (
     towel_id int primary key generated always as identity,
     product_id int not null check (product_id = 1) default 1,
-    name varchar ( 50 ) not null,
+    name varchar ( 50 ) not null unique,
     layers int not null check (layers in (3, 4)) default 3,
     price int not null,
-        constraint fk_product
-            foreign key(product_id)
-                references product(product_id)
+    created_at timestamptz default now(),
+    constraint fk_product
+        foreign key(product_id)
+        references product(product_id)
+        on delete cascade
 );
 
-insert into towel (name, layers, price)
-values ('towel', 3, 15000)
-     , ('towel', 4, 20000);
-
-create table if not exists option (
-    category_id int,
-    product_id int,
-    pre_wash boolean default false,
-    gift_stich boolean default false,
-    gift_wrap boolean default false,
+create table if not exists dish_towel (
+    dish_towel_id int primary key generated always as identity,
+    product_id int not null check (product_id = 2) default 2,
+    name varchar ( 50 ) not null unique,
+    size varchar ( 5 ) not null check (size in ('S', 'M')) default 'S',
     price int not null,
-        constraint 
-    primary key (category_id, product_id)
+    created_at timestamptz default now(),
+    constraint fk_product
+        foreign key(product_id)
+        references product(product_id)
+        on delete cascade
+);
+
+create table if not exists hand_towel (
+    hand_towel_id int primary key generated always as identity,
+    product_id int not null check (product_id = 2) default 2,
+    name varchar ( 50 ) not null unique,
+    layers int not null check (layers in (3, 4)) default 3,
+    size varchar ( 5 ) not null check (size in ('S', 'M')) default 'S',
+    price int not null,
+    created_at timestamptz default now(),
+    constraint fk_product
+        foreign key(product_id)
+        references product(product_id)
+        on delete cascade
+);
+
+create table if not exists pillow_cover (
+    pillow_cover_id int primary key generated always as identity,
+    product_id int not null check (product_id = 3) default 3,
+    name varchar ( 50 ) not null unique,
+    size varchar ( 5 ) not null check (size in ('S', 'M', 'L', 'C')) default 'S',
+    price int not null,
+    created_at timestamptz default now(),
+    constraint fk_product
+        foreign key(product_id)
+        references product(product_id)
+        on delete cascade
+);
+
+create table if not exists sanitary (
+    sanitary_id int primary key generated always as identity,
+    product_id int not null check (product_id = 4) default 4,
+    name varchar ( 50 ) not null unique,
+    size varchar ( 5 ) not null check (size in ('P', 'S', 'M', 'L', 'O')) default 'P',
+    price int not null,
+    created_at timestamptz default now(),
+    constraint fk_product
+        foreign key(product_id)
+        references product(product_id)
+        on delete cascade
+);
+
+create table if not exists mat (
+    mat_id int primary key generated always as identity,
+    product_id int not null check (product_id = 4) default 4,
+    name varchar ( 50 ) not null unique,
+    size varchar ( 5 ) not null check (size in ('M', 'L')) default 'M',
+    price int not null,
+    created_at timestamptz default now(),
+    constraint fk_product
+        foreign key(product_id)
+        references product(product_id)
+        on delete cascade
+);
+
+create table if not exists nursing_pads (
+    nursing_pads_id int primary key generated always as identity,
+    product_id int not null check (product_id = 5) default 5,
+    name varchar ( 50 ) not null unique,
+    sets int not null check (sets in (1, 3, 5)) default 1,
+    price int not null,
+    created_at timestamptz default now(),
+    constraint fk_product
+        foreign key(product_id)
+        references product(product_id)
+        on delete cascade
+);
+
+create table if not exists diaper (
+    diaper_id int primary key generated always as identity,
+    product_id int not null check (product_id = 5) default 5,
+    name varchar ( 50 ) not null unique,
+    size varchar ( 5 ) not null check (size in ('S', 'M', 'L')) default 'S',
+    price int not null,
+    created_at timestamptz default now(),
+    constraint fk_product
+        foreign key(product_id)
+        references product(product_id)
+        on delete cascade
 );
 `;

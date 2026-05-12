@@ -6,6 +6,7 @@
 | ----------- | -------------: |
 | category_id |     int **PK** |
 | name        | varchar ( 50 ) |
+| created_at  |    timestamptz |
 
 **categories**
 
@@ -20,6 +21,7 @@
 | product_id  |     int **PK** |
 | category_id |     int **FK** |
 | name        | varchar ( 50 ) |
+| created_at  |    timestamptz |
 
 **products**
 
@@ -39,6 +41,7 @@
 | name       | varchar ( 50 ) |
 | layers     |            int |
 | price      |            int |
+| created_at |    timestamptz |
 
 | dish_towel    |                |
 | ------------- | -------------: |
@@ -47,6 +50,7 @@
 | name          | varchar ( 50 ) |
 | size          |  varchar ( 5 ) |
 | price         |            int |
+| created_at    |    timestamptz |
 
 | hand_towel    |                |
 | ------------- | -------------: |
@@ -56,6 +60,7 @@
 | layers        |            int |
 | size          |  varchar ( 5 ) |
 | price         |            int |
+| created_at    |    timestamptz |
 
 | pillow_cover    |                |
 | --------------- | -------------: |
@@ -64,6 +69,7 @@
 | name            | varchar ( 50 ) |
 | size            |  varchar ( 5 ) |
 | price           |            int |
+| created_at      |    timestamptz |
 
 | sanitary    |                |
 | ----------- | -------------: |
@@ -72,6 +78,7 @@
 | name        | varchar ( 50 ) |
 | size        |  varchar ( 5 ) |
 | price       |            int |
+| created_at  |    timestamptz |
 
 | mat        |                |
 | ---------- | -------------: |
@@ -80,6 +87,7 @@
 | name       | varchar ( 50 ) |
 | size       |  varchar ( 5 ) |
 | price      |            int |
+| created_at |    timestamptz |
 
 | nursing_pads    |                |
 | --------------- | -------------: |
@@ -88,6 +96,7 @@
 | name            | varchar ( 50 ) |
 | set             |            int |
 | price           |            int |
+| created_at      |    timestamptz |
 
 | diaper     |                |
 | ---------- | -------------: |
@@ -96,14 +105,16 @@
 | name       | varchar ( 50 ) |
 | size       |  varchar ( 5 ) |
 | price      |            int |
+| created_at |    timestamptz |
 
 ---
 
-| option      |            |
-| ----------- | ---------: |
-| option_id   | int **PK** |
-| product_id  | int **FK** |
-| pre_wash    |    boolean |
-| gift_stitch |    boolean |
-| gift_wrap   |    boolean |
-| price       |    integer |
+| option      |             |
+| ----------- | ----------: |
+| option_id   |  int **PK** |
+| product_id  |  int **FK** |
+| pre_wash    |     boolean |
+| gift_stitch |     boolean |
+| gift_wrap   |     boolean |
+| price       |     integer |
+| created_at  | timestamptz |
