@@ -10,4 +10,9 @@ const getAllProducts = async () => {
   return rows;
 };
 
-export = { getAllCategories, getAllProducts };
+const getAllOptions = async () => {
+  const { rows } = await pool.query("select * from option");
+  return rows;
+};
+
+export = { getAllCategories, getAllProducts, getAllOptions };

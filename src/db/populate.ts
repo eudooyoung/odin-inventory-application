@@ -61,11 +61,11 @@ create table if not exists option (
 );
 
 insert into option (name, price)
-values ('pre_wash_none', 0)
-     , ('pre_wash', 5800)
-     , ('border_stitch', 2000)
-     , ('gift_stitch', 3000)
-     , ('gift_wrap', 2000)
+values ('common_pre_wash_none', 0)
+     , ('common_pre_wash', 5800)
+     , ('common_border_stitch', 2000)
+     , ('common_gift_stitch', 3000)
+     , ('common_gift_wrap', 2000)
      , ('towel_layers_3', 0)
      , ('towel_layers_4', 5000)
      , ('dish_towel_size_s', 0)

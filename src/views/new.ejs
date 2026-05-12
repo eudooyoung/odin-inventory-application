@@ -8,19 +8,15 @@
   <body>
     <%- include("partials/header") %>
     <h2><%= title %></h2>
-    <p>Fabric Shop Inventory Managing Systeam</p>
+    <p>Fill the form to add a new inventory</p>
     <div style="display: flex; gap: 10rem">
       <section>
-        <h3>Categories</h3>
-        <%- include("partials/category") %>
-      </section>
-      <section>
-        <h3>Products</h3>
-        <%- include("partials/product") %>
-      </section>
-      <section>
-        <h3>Options</h3>
-        <%- include("partials/option") %>
+        <h3>New Category</h3>
+        <form action="/new/category" method="post">
+          <label for="category-name">Category name: </label>
+          <input type="text" name="category-name" id="category-name" />
+          <button type="submit">Create</button>
+        </form>
       </section>
     </div>
   </body>
