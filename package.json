@@ -24,7 +24,7 @@
     "build": "npm install && tsc && cp -r src/views dist/",
     "start": "node dist/app.js",
     "populate": "tsx --env-file=.env src/db/populate.ts",
-    "dev": "tsx --watch --env=.env src/app.ts",
+    "dev": "tsx --watch --env-file=.env src/app.ts",
     "prettier:e": "prettier --plugin=prettier-plugin-ejs --write **/*.ejs"
   },
   "keywords": [],

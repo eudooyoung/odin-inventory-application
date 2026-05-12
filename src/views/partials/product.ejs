@@ -1,0 +1,9 @@
+<% if (locals.products) { %>
+<ul>
+  <% products.forEach(product => { %>
+  <li>
+    <%= product.name %>
+  </li>
+  <% }) %>
+</ul>
+<% } %>

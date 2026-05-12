@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fabric Shop</title>
+  </head>
+  <body>
+    <%- include("partials/header") %>
+    <h2>Fabric Shop Inventory Managing Systeam</h2>
+    <div style="display: flex; gap: 10rem">
+      <section>
+        <h3>Categories</h3>
+        <%- include("partials/category") %>
+      </section>
+      <section>
+        <h3>Products</h3>
+        <%- include("partials/product") %>
+      </section>
+    </div>
+  </body>
+</html>
