@@ -2,6 +2,7 @@ import express = require("express");
 import path = require("node:path");
 import router = require("./routes/router");
 import categoryRouter = require("./routes/categoryRouter");
+import productRouter = require("./routes/productRouter");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/", router);
 app.use("/category", categoryRouter);
+app.use("/product", productRouter);
 
 app.listen(PORT, (error) => {
   if (error) {

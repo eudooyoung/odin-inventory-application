@@ -2,7 +2,7 @@
 <ul>
   <% products.forEach(product => { %>
   <li>
-    <%= product.name %>
+    <a href="/product/<%= product.product_id %>"><%= product.name %></a>
   </li>
   <% }) %>
 </ul>
