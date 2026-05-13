@@ -75,7 +75,7 @@ const updateCategoryPostMiddleware: types.ControllerMiddleware = async (
   if (!errors.isEmpty()) {
     const categories = await db.getAllCategories();
     const category = await db.findCategoryById(categoryId);
-    const products = await db.getAllProducts();
+    const products = await db.findProductsByCategoryId(categoryId);
     return res.status(400).render("category/category-update", {
       title: "Categories",
       links: links,
