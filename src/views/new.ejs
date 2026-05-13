@@ -9,15 +9,56 @@
     <%- include("partials/header") %>
     <h2><%= title %></h2>
     <p>Fill the form to add a new inventory</p>
-    <div style="display: flex; gap: 10rem">
-      <section>
-        <h3>New Category</h3>
+    <section>
+      <h3>New Category</h3>
+      <div>
         <form action="/new/category" method="post">
-          <label for="category-name">Category name: </label>
-          <input type="text" name="category-name" id="category-name" />
+          <label for="category-name">Name: </label>
+          <input
+            type="text"
+            name="category-name"
+            id="category-name"
+            value="<%= locals.prev && prev['category-name'] %>"
+            required
+          />
           <button type="submit">Create</button>
         </form>
-      </section>
-    </div>
+        <%- include("partials/category-errors") %>
+      </div>
+    </section>
+    <% if (locals.categories) { %>
+    <section>
+      <h3>New Product</h3>
+      <form action="/new/product" method="post">
+        <label for="category-id">Category:</label>
+        <select name="category-id" id="category-id" required>
+          <option value="" disabled selected>Choose a category</option>
+          <% categories.forEach(category => { %>
+          <option value="<%= category.category_id %>">
+            <%= category.name %>
+          </option>
+          <% }) %>
+        </select>
+        <label for="product-name">Name:</label>
+        <input
+          type="text"
+          name="product-name"
+          id="product-name"
+          value="<%= locals.prev && prev['product-name'] %>"
+          required
+        />
+        <label for="product-price">Price:</label>
+        <input
+          type="number"
+          name="product-price"
+          id="product-price"
+          value="<%= locals.prev && prev['product-price'] %>"
+          required
+        />
+        <button type="submit">Create</button>
+      </form>
+      <%- include("partials/product-errors") %>
+    </section>
+    <% } %>
   </body>
 </html>

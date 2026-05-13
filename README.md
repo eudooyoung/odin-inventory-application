@@ -8,14 +8,6 @@
 | name        |     varchar |
 | created_at  | timestamptz |
 
-**categories**
-
-- bath
-- kitchen
-- bedroom
-- daily
-- nursery
-
 ---
 
 | product     |             |
@@ -26,17 +18,6 @@
 | price       |         int |
 | created_at  | timestamptz |
 
-**products**
-
-- towel
-- dish_towel
-- hand_towel
-- pillow_cover
-- sanitary
-- mat
-- nusring_pads
-- diaper
-
 ---
 
 | option     |             |
@@ -45,13 +26,6 @@
 | name       |     varchar |
 | price      |         int |
 | created_at | timestamptz |
-
-**common options**
-
-- pre_wash
-- border_stitch
-- gift_stitch
-- gift_wrap
 
 ---
 

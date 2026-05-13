@@ -1,0 +1,7 @@
+<% if (locals.categoryErrors) { %>
+<ul>
+  <% categoryErrors.forEach(categoryError => { %>
+  <li><%= categoryError.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
