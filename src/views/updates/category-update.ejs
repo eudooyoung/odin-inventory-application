@@ -6,11 +6,11 @@
     <title>Fabric Shop</title>
   </head>
   <body>
-    <%- include("../partials/header") %>
+    <%- include("../headers/header") %>
     <h2>Categories</h2>
-    <%- include("../partials/category-header") %>
+    <%- include("../headers/category-header") %>
     <h2>Category edit</h2>
-    <%- include('../partials/category-errors') %>
+    <%- include('../errors/category-errors') %>
     <form action="/category/<%= category.category_id %>/update" method="post">
       <a
         href="/category/<%= category.category_id %>"
@@ -29,6 +29,7 @@
           id="category-name"
           value="<%= locals.prev ? prev['category-name'] : category.name %>"
           autofocus
+          required
         />
       </p>
       <p>

@@ -8,23 +8,9 @@ const { validationResult, matchedData } = validator;
 
 const categoryGet: types.ControllerMiddleware = async (req, res) => {
   const categories = await db.getAllCategories();
-  res.render("category/category", {
+  res.render("category", {
     links: links,
     categories: categories,
-  });
-};
-
-const categoryDetailGet: types.ControllerMiddleware = async (req, res) => {
-  const categories = await db.getAllCategories();
-  const categoryId = Number(req.params.categoryId);
-  const category = await db.findCategoryById(categoryId);
-  const products = await db.findProductsByCategoryId(categoryId);
-  res.render("category/category-detail", {
-    title: "Categories",
-    links: links,
-    categories: categories,
-    category: category,
-    products: products,
   });
 };
 
@@ -36,7 +22,7 @@ const newCategoryPostMiddleware: types.ControllerMiddleware = async (
   if (!errors.isEmpty()) {
     const categories = await db.getAllCategories();
     const products = await db.getAllProducts();
-    return res.status(400).render("category/category", {
+    return res.status(400).render("category", {
       title: "Categories",
       links: links,
       categories: categories,
@@ -52,13 +38,25 @@ const newCategoryPostMiddleware: types.ControllerMiddleware = async (
 
 const newCategoryPost = [validateCategory, newCategoryPostMiddleware];
 
+const categoryDetailGet: types.ControllerMiddleware = async (req, res) => {
+  const categories = await db.getAllCategories();
+  const categoryId = Number(req.params.categoryId);
+  const category = await db.getCategoryById(categoryId);
+  const products = await db.getProductsByCategoryId(categoryId);
+  res.render("details/category-detail", {
+    links: links,
+    categories: categories,
+    category: category,
+    products: products,
+  });
+};
+
 const updateCategoryGet: types.ControllerMiddleware = async (req, res) => {
   const categories = await db.getAllCategories();
   const categoryId = Number(req.params.categoryId);
-  const category = await db.findCategoryById(categoryId);
-  const products = await db.findProductsByCategoryId(categoryId);
-  res.render("category/category-update", {
-    title: "Categories",
+  const category = await db.getCategoryById(categoryId);
+  const products = await db.getProductsByCategoryId(categoryId);
+  res.render("updates/category-update", {
     links: links,
     categories: categories,
     category: category,
@@ -74,10 +72,9 @@ const updateCategoryPostMiddleware: types.ControllerMiddleware = async (
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const categories = await db.getAllCategories();
-    const category = await db.findCategoryById(categoryId);
-    const products = await db.findProductsByCategoryId(categoryId);
-    return res.status(400).render("category/category-update", {
-      title: "Categories",
+    const category = await db.getCategoryById(categoryId);
+    const products = await db.getProductsByCategoryId(categoryId);
+    return res.status(400).render("updates/category-update", {
       links: links,
       categories: categories,
       category: category,
@@ -97,7 +94,7 @@ const deleteCategoryPost: types.ControllerMiddleware = async (req, res) => {
   const categoryId = Number(req.params.categoryId);
   await db.deleteCategoryById(categoryId);
   res.redirect("/category");
-}
+};
 
 export = {
   categoryGet,

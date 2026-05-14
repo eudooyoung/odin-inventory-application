@@ -1,10 +1,11 @@
-import express = require("express");
-import productController = require("../controllers/productController");
-const { Router } = express;
-const { productGet } = productController;
+import ex = require("express");
+import pc = require("../controllers/productController");
 
-const productRouter = Router();
+const productRouter = ex.Router();
 
-productRouter.get("/", productGet);
+productRouter.get("/", pc.productGet);
+productRouter.post("/new", pc.newProductPost);
+productRouter.get("/:productId", pc.productDetailGet);
+productRouter.get("/:productId/update", pc.updateProductGet)
 
 export = productRouter;

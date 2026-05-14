@@ -6,21 +6,45 @@
     <title>Fabric Shop</title>
   </head>
   <body>
-    <%- include("partials/header") %>
+    <%- include("headers/header") %>
     <h2>Home</h2>
     <p>Fabric Shop Inventory Managing Systeam</p>
     <div style="display: flex; gap: 10rem">
       <section>
         <h3>Categories</h3>
-        <%- include("partials/category-header") %>
+        <% if (locals.categories) { %>
+        <ul>
+          <% categories.forEach(category => { %>
+          <li>
+            <%= category.name %>
+          </li>
+          <% }) %>
+        </ul>
+        <% } %>
       </section>
       <section>
         <h3>Products</h3>
-        <%- include("partials/product-header") %>
+        <% if (locals.products) { %>
+        <ul>
+          <% products.forEach(product => { %>
+          <li>
+            <%= product.name %>
+          </li>
+          <% }) %>
+        </ul>
+        <% } %>
       </section>
       <section>
         <h3>Options</h3>
-        <%- include("partials/option-header") %>
+        <% if (locals.options) { %>
+        <ul>
+          <% options.forEach(option => { %>
+          <li>
+            <%= option.name %>
+          </li>
+          <% }) %>
+        </ul>
+        <% } %>
       </section>
     </div>
   </body>
