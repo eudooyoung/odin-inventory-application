@@ -15,8 +15,8 @@ const validateCategory = body("categoryName")
   .isLength({ min: 1, max: 10 })
   .withMessage(`Category ${nameLengthErr}`)
   .custom(async (categoryName) => {
-    const category = await db.findCategoryByName(categoryName);
-    if (category) {
+    const isDuplicate = !await db.existCategoryByName(categoryName);
+    if (isDuplicate) {
       return Promise.reject(`Category name ${duplicateErr}`);
     }
   });

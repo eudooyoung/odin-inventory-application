@@ -54,14 +54,14 @@ const getProductsByCategoryId = async (categoryId: number) => {
   return converted;
 };
 
-const findCategoryByName = async (categoryName: string) => {
+const existCategoryByName = async (categoryName: string) => {
   const { rows } = await pool.query(
-    `select * 
+    `select name 
        from category
       where name = $1`,
     [categoryName],
   );
-  return rows[0];
+  return rows.length > 0;
 };
 
 const insertCategory = async (categoryName: string) => {
@@ -151,7 +151,7 @@ export = {
   getAllOptions,
   getCategoryById,
   getProductsByCategoryId,
-  findCategoryByName,
+  existCategoryByName,
   insertCategory,
   updateCategoryById,
   deleteCategoryById,
