@@ -2,7 +2,7 @@
 <ul>
   <% options.forEach(option => { %>
   <li>
-    <%= option.name %>
+    <a href="option/<%= option.option_id %>"><%= option.name %></a>
   </li>
   <% }) %>
 </ul>

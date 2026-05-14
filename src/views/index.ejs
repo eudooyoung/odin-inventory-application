@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fabric Shop</title>
+    <link rel="stylesheet" href="css/common.css">
   </head>
   <body>
     <%- include("headers/header") %>
@@ -12,39 +13,15 @@
     <div style="display: flex; gap: 10rem">
       <section>
         <h3>Categories</h3>
-        <% if (locals.categories) { %>
-        <ul>
-          <% categories.forEach(category => { %>
-          <li>
-            <%= category.name %>
-          </li>
-          <% }) %>
-        </ul>
-        <% } %>
+        <%- include("headers/category-header") %>
       </section>
       <section>
         <h3>Products</h3>
-        <% if (locals.products) { %>
-        <ul>
-          <% products.forEach(product => { %>
-          <li>
-            <%= product.name %>
-          </li>
-          <% }) %>
-        </ul>
-        <% } %>
+        <%- include("headers/product-header") %>
       </section>
       <section>
         <h3>Options</h3>
-        <% if (locals.options) { %>
-        <ul>
-          <% options.forEach(option => { %>
-          <li>
-            <%= option.name %>
-          </li>
-          <% }) %>
-        </ul>
-        <% } %>
+        <%- include("headers/option-header") %>
       </section>
     </div>
   </body>
