@@ -1,8 +1,8 @@
 <main>
   <h2>Category edit</h2>
   <%- include('../errors/category-errors') %>
-  <form action="/category/<%= category.category_id %>/update" method="post">
-    <a href="/category/<%= category.category_id %>" style="text-decoration: none">
+  <form action="/category/<%= category.categoryId %>/update" method="post">
+    <a href="/category/<%= category.categoryId %>" style="text-decoration: none">
       <button type="button">Cancel</button>
     </a>
     <button type="submit">Save</button>
@@ -12,11 +12,11 @@
     </p>
     <p>
       <span style="font-weight: bold">Category ID:</span>
-      <%= category.category_id %>
+      <%= category.categoryId %>
     </p>
     <p>
       <span style="font-weight: bold">Added at:</span>
-      <%= category.created_at %>
+      <%= category.createdAt %>
     </p>
     <p><span style="font-weight: bold">Products</span></p>
     <ul>

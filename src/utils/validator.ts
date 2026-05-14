@@ -8,7 +8,7 @@ const duplicateErr = "already in use.";
 const alphaNumericErr = "must only contain letters, numbers or underscore.";
 const priceErr = "must be greater or equal to 0";
 
-const validateCategory = body("category-name")
+const validateCategory = body("categoryName")
   .trim()
   .isAlpha()
   .withMessage(`Category ${alphaErr}`)

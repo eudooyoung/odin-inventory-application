@@ -5,7 +5,7 @@ import vr = require("../utils/validator");
 import v = require("express-validator");
 import jsConvert = require("js-convert-case");
 
-const productGet: types.ControllerMiddleware = async (req, res) => {
+const productGet: types.Middleware = async (req, res) => {
   const categories = await db.getAllCategories();
   const products = await db.getAllProducts();
   const options = await db.getAllOptions();
@@ -17,7 +17,7 @@ const productGet: types.ControllerMiddleware = async (req, res) => {
   });
 };
 
-const newProductPostMiddleware: types.ControllerMiddleware = async (
+const newProductPostMiddleware: types.Middleware = async (
   req,
   res,
 ) => {
@@ -41,7 +41,7 @@ const newProductPostMiddleware: types.ControllerMiddleware = async (
 
 const newProductPost = [...vr.validateProduct, newProductPostMiddleware];
 
-const productDetailGet: types.ControllerMiddleware = async (req, res) => {
+const productDetailGet: types.Middleware = async (req, res) => {
   const products = await db.getAllProducts();
   const productId = Number(req.params.productId);
   const productWithCategoryName =
@@ -56,7 +56,7 @@ const productDetailGet: types.ControllerMiddleware = async (req, res) => {
   });
 };
 
-const updateProductGet: types.ControllerMiddleware = async (req, res) => {
+const updateProductGet: types.Middleware = async (req, res) => {
   const products = await db.getAllProducts();
   const productId = Number(req.params.productId);
   const productWithCategoryName =

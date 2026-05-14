@@ -9,7 +9,7 @@
         <select name="category-id" id="category-id" required>
           <option value="" disabled <%= !locals.prev && 'selected'%>>Choose a category</option>
           <% categories.forEach(category => { %>
-          <option <%= locals.prev && Number(prev['category-id']) === category.category_id && 'selected' %> value="<%= category.category_id %>">
+          <option <%= locals.prev && Number(prev.categoryId) === category.categoryId && 'selected' %> value="<%= category.categoryId %>">
             <%= category.name %>
           </option>
           <% }) %>
@@ -17,19 +17,19 @@
       </div>
       <div>
         <label for="product-name">Name:</label>
-        <input type="text" name="product-name" id="product-name" value="<%= locals.prev && prev['product-name'] %>" required />
+        <input type="text" name="product-name" id="product-name" value="<%= locals.prev && prev.productName %>" required />
       </div>
       <div>
         <label for="product-price">Price:</label>
-        <input type="number" name="product-price" id="product-price" value="<%= locals.prev && prev['product-price'] %>" required />
+        <input type="number" name="product-price" id="product-price" value="<%= locals.prev && prev.productName %>" required />
       </div>
       <fieldset style="padding-right: 2rem;">
         <legend>Options</legend>
         <ul>
           <% options.forEach(option => { %>
           <li style="display:flex; justify-content: space-between;">
-            <label for="o-<%= option.option_id %>"><%= option.name %></label>
-            <input type="checkbox" name="options" id="o-<%= option.option_id %>">
+            <label for="o-<%= option.optionId %>"><%= option.name %></label>
+            <input type="checkbox" name="options" id="o-<%= option.optionId %>">
           </li>
           <% }) %>
         </ul>

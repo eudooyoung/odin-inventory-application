@@ -1,5 +1,7 @@
+import jsConvert = require("js-convert-case");
 import type types = require("../utils/types");
 import pool = require("./pool");
+import cc = require("../utils/case-converter");
 
 const getAllCategories = async () => {
   const { rows } = await pool.query(
@@ -7,7 +9,8 @@ const getAllCategories = async () => {
        from category
       order by category_id`,
   );
-  return rows;
+  const converted = cc.nameConverter(rows);
+  return converted;
 };
 
 const getAllProducts = async () => {
@@ -16,7 +19,8 @@ const getAllProducts = async () => {
        from product
       order by category_id, product_id`,
   );
-  return rows;
+  const converted = cc.nameConverter(rows);
+  return converted;
 };
 
 const getAllOptions = async () => {
@@ -24,7 +28,8 @@ const getAllOptions = async () => {
     `select option_id, name
        from option`,
   );
-  return rows;
+  const converted = cc.nameConverter(rows);
+  return converted;
 };
 
 const getCategoryById = async (categoryId: number) => {
@@ -34,7 +39,8 @@ const getCategoryById = async (categoryId: number) => {
       where category_id = $1`,
     [categoryId],
   );
-  return rows[0];
+  const converted = cc.nameConverter(rows);
+  return converted[0];
 };
 
 const getProductsByCategoryId = async (categoryId: number) => {
@@ -44,7 +50,8 @@ const getProductsByCategoryId = async (categoryId: number) => {
       where category_id = $1`,
     [categoryId],
   );
-  return rows;
+  const converted = cc.nameConverter(rows);
+  return converted;
 };
 
 const findCategoryByName = async (categoryName: string) => {
