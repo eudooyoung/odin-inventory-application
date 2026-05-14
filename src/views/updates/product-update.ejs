@@ -1,58 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fabric Shop</title>
-  </head>
-  <body>
-    <%- include("../headers/header") %>
-    <h2>Products</h2>
-    <%- include("../headers/product-header") %>
-    <h2>Product edit</h2>
-    <%- include("../errors/product-errors") %>
-    <form
-      action="/product/<%= productWithCategoryName.productId %>/update"
-      method="post"
-    >
-      <a
-        style="text-decoration: none"
-        href="/product/<%= productWithCategoryName.productId %>"
-      >
-        <button type="button">Cancel</button>
-      </a>
-      <button type="submit">Save</button>
-      <p>
-        <label for="product-name" style="font-weight: bold"
-          >Product name:</label
-        >
-        <input
-          type="text"
-          name="product-name"
-          id="product-name"
-          value="<%= locals.prev ? prev['product-name'] : productWithCategoryName.name %>"
-          autofocus
-          required
-        />
-      </p>
-      <p>
-        <span style="font-weight: bold">Product ID:</span>
-        <%= productWithCategoryName.productId %>
-      </p>
-      <p>
-        <span style="font-weight: bold">Category:</span>
-        <%= productWithCategoryName.categoryName %>
-      </p>
-      <p>
-        <span style="font-weight: bold">Added at:</span>
-        <%= productWithCategoryName.createdAt %>
-      </p>
-      <p><span style="font-weight: bold">Options</span></p>
-      <ul>
-        <% options.forEach(option => { %>
-        <li><%= option.name %></li>
-        <% }) %>
-      </ul>
-    </form>
-  </body>
-</html>
+<main>
+
+  <h2>Product edit</h2>
+  <%- include("../errors/product-errors") %>
+  <form action="/product/<%= productWithCategoryName.productId %>/update" method="post">
+    <a style="text-decoration: none" href="/product/<%= productWithCategoryName.productId %>">
+      <button type="button">Cancel</button>
+    </a>
+    <button type="submit">Save</button>
+    <p>
+      <label for="product-name" style="font-weight: bold">Product name:</label>
+      <input type="text" name="product-name" id="product-name" value="<%= locals.prev ? prev['product-name'] : productWithCategoryName.name %>" autofocus required />
+    </p>
+    <p>
+      <span style="font-weight: bold">Product ID:</span>
+      <%= productWithCategoryName.productId %>
+    </p>
+    <p>
+      <span style="font-weight: bold">Category:</span>
+      <%= productWithCategoryName.categoryName %>
+    </p>
+    <p>
+      <span style="font-weight: bold">Added at:</span>
+      <%= productWithCategoryName.createdAt %>
+    </p>
+    <p><span style="font-weight: bold">Options</span></p>
+    <ul>
+      <% options.forEach(option => { %>
+      <li><%= option.name %></li>
+      <% }) %>
+    </ul>
+  </form>
+</main>

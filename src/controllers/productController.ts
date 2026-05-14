@@ -47,7 +47,8 @@ const productDetailGet: types.ControllerMiddleware = async (req, res) => {
   const productWithCategoryName =
     await db.getProductWithCategoryNameByProductId(productId);
   const options = await db.getOptionsByProductId(productId);
-  res.render("details/product-detail", {
+  res.render("product", {
+    route: "detail",
     links: links,
     products: products,
     productWithCategoryName: jsConvert.camelKeys(productWithCategoryName),
@@ -61,7 +62,8 @@ const updateProductGet: types.ControllerMiddleware = async (req, res) => {
   const productWithCategoryName =
     await db.getProductWithCategoryNameByProductId(productId);
   const options = await db.getOptionsByProductId(productId);
-  res.render("updates/product-update", {
+  res.render("product", {
+    route: "update",
     links: links,
     products: products,
     productWithCategoryName: jsConvert.camelKeys(productWithCategoryName),

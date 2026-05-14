@@ -1,55 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fabric Shop</title>
-  </head>
-  <body>
-    <%- include("../headers/header") %>
-    <h2>Categories</h2>
-    <%- include("../headers/product-header") %>
-    <h2>Product detail</h2>
-    <a
-      style="text-decoration: none"
-      href="/product/<%= productWithCategoryName.productId %>/update"
-    >
-      <button>Edit</button>
-    </a>
-    <form
-      style="display: contents"
-      action="/product/<%= productWithCategoryName.productId %>/delete"
-      method="post"
-    >
-      <button
-        type="submit"
-        style="background: red; color: #fff"
-        onclick="return confirm('Are you sure?');"
-      >
-        Delete
-      </button>
-    </form>
-    <p>
-      <span style="font-weight: bold">Product name:</span>
-      <%= productWithCategoryName.name %>
-    </p>
-    <p>
-      <span style="font-weight: bold">Product ID:</span>
-      <%= productWithCategoryName.productId %>
-    </p>
-    <p>
-      <span style="font-weight: bold">Category:</span>
-      <%= productWithCategoryName.categoryName %>
-    </p>
-    <p>
-      <span style="font-weight: bold">Added at:</span>
-      <%= productWithCategoryName.createdAt %>
-    </p>
-    <p><span style="font-weight: bold">Options</span></p>
-    <ul>
-      <% options.forEach(option => { %>
-      <li><%= option.name %></li>
-      <% }) %>
-    </ul>
-  </body>
-</html>
+<main>
+  <h2>Product detail</h2>
+  <a style="text-decoration: none" href="/product/<%= productWithCategoryName.productId %>/update">
+    <button>Edit</button>
+  </a>
+  <form style="display: contents" action="/product/<%= productWithCategoryName.productId %>/delete" method="post">
+    <button type="submit" style="background: red; color: #fff" onclick="return confirm('Are you sure?');">
+      Delete
+    </button>
+  </form>
+  <p>
+    <span style="font-weight: bold">Product name:</span>
+    <%= productWithCategoryName.name %>
+  </p>
+  <p>
+    <span style="font-weight: bold">Product ID:</span>
+    <%= productWithCategoryName.productId %>
+  </p>
+  <p>
+    <span style="font-weight: bold">Category:</span>
+    <%= productWithCategoryName.categoryName %>
+  </p>
+  <p>
+    <span style="font-weight: bold">Added at:</span>
+    <%= productWithCategoryName.createdAt %>
+  </p>
+  <p><span style="font-weight: bold">Options</span></p>
+  <ul>
+    <% options.forEach(option => { %>
+    <li><%= option.name %></li>
+    <% }) %>
+  </ul>
+</main>
