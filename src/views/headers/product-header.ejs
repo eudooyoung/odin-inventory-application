@@ -1,9 +1,12 @@
-<% if (locals.products) { %>
-<ul>
-  <% products.forEach(product => { %>
-  <li>
-    <a href="/product/<%= product.product_id %>"><%= product.name %></a>
-  </li>
-  <% }) %>
-</ul>
-<% } %>
+<section>
+  <h2>Products</h2>
+  <% if (locals.products) { %>
+  <ul>
+    <% products.forEach(product => { %>
+    <li>
+      <a href="/product/<%= product.product_id %>"><%= product.name %></a>
+    </li>
+    <% }) %>
+  </ul>
+  <% } %>
+</section>

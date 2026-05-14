@@ -1,32 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fabric Shop</title>
-  </head>
-  <body>
-    <%- include("headers/header") %>
-    <h2>Categories</h2>
-    <%- include("headers/category-header") %>
-    <h2>Add new category</h2>
-    <p>Fill the form below to add a new category</p>
-    <section>
-      <h3>New Category</h3>
-      <div>
-        <form action="/category/new" method="post">
-          <label for="category-name">Name: </label>
-          <input
-            type="text"
-            name="category-name"
-            id="category-name"
-            value="<%= locals.prev && prev['category-name'] %>"
-            required
-          />
-          <button type="submit">Create</button>
-        </form>
-        <%- include("errors/category-errors") %>
-      </div>
-    </section>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fabric Shop</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <%- include("headers/header") %>
+  <%- include("headers/category-header") %>
+  <%- include("adds/category-add") %>
+</body>
+
 </html>

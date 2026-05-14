@@ -1,28 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fabric Shop</title>
-    <link rel="stylesheet" href="css/common.css">
-  </head>
-  <body>
-    <%- include("headers/header") %>
-    <h2>Home</h2>
-    <p>Fabric Shop Inventory Managing Systeam</p>
-    <div style="display: flex; gap: 10rem">
-      <section>
-        <h3>Categories</h3>
-        <%- include("headers/category-header") %>
-      </section>
-      <section>
-        <h3>Products</h3>
-        <%- include("headers/product-header") %>
-      </section>
-      <section>
-        <h3>Options</h3>
-        <%- include("headers/option-header") %>
-      </section>
-    </div>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fabric Shop</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <%- include("headers/header") %>
+  <h2>Home</h2>
+  <p>Fabric Shop Inventory Managing Systeam</p>
+  <div style="display: flex; gap: 10rem">
+    <%- include("headers/category-header") %>
+    <%- include("headers/product-header") %>
+    <%- include("headers/option-header") %>
+  </div>
+</body>
+
 </html>

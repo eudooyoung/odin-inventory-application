@@ -1,0 +1,41 @@
+<main>
+  <h2>Add new product</h2>
+  <p>Fill the form below to add a new product</p>
+  <section>
+    <h3>New Product</h3>
+    <form style="display:grid; row-gap:1rem; max-width:20rem; justify-content: center; " action="/product/new" method="post">
+      <div>
+        <label for="category-id">Category:</label>
+        <select name="category-id" id="category-id" required>
+          <option value="" disabled <%= !locals.prev && 'selected'%>>Choose a category</option>
+          <% categories.forEach(category => { %>
+          <option <%= locals.prev && Number(prev['category-id']) === category.category_id && 'selected' %> value="<%= category.category_id %>">
+            <%= category.name %>
+          </option>
+          <% }) %>
+        </select>
+      </div>
+      <div>
+        <label for="product-name">Name:</label>
+        <input type="text" name="product-name" id="product-name" value="<%= locals.prev && prev['product-name'] %>" required />
+      </div>
+      <div>
+        <label for="product-price">Price:</label>
+        <input type="number" name="product-price" id="product-price" value="<%= locals.prev && prev['product-price'] %>" required />
+      </div>
+      <fieldset style="padding-right: 2rem;">
+        <legend>Options</legend>
+        <ul>
+          <% options.forEach(option => { %>
+          <li style="display:flex; justify-content: space-between;">
+            <label for="o-<%= option.option_id %>"><%= option.name %></label>
+            <input type="checkbox" name="options" id="o-<%= option.option_id %>">
+          </li>
+          <% }) %>
+        </ul>
+      </fieldset>
+      <button style="justify-self:center" type="submit">Create</button>
+    </form>
+    <%- include("../errors/product-errors") %>
+  </section>
+</main>

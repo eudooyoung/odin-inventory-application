@@ -1,9 +1,12 @@
-<% if (locals.options) { %>
-<ul>
-  <% options.forEach(option => { %>
-  <li>
-    <a href="option/<%= option.option_id %>"><%= option.name %></a>
-  </li>
-  <% }) %>
-</ul>
-<% } %>
+<section>
+  <h2>Options</h2>
+  <% if (locals.options) { %>
+  <ul>
+    <% options.forEach(option => { %>
+    <li>
+      <a href="option/<%= option.option_id %>"><%= option.name %></a>
+    </li>
+    <% }) %>
+  </ul>
+  <% } %>
+</section>
