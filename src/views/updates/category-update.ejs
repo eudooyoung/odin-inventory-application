@@ -1,51 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fabric Shop</title>
-  </head>
-  <body>
-    <%- include("../headers/header") %>
-    <h2>Categories</h2>
-    <%- include("../headers/category-header") %>
-    <h2>Category edit</h2>
-    <%- include('../errors/category-errors') %>
-    <form action="/category/<%= category.category_id %>/update" method="post">
-      <a
-        href="/category/<%= category.category_id %>"
-        style="text-decoration: none"
-      >
-        <button type="button">Cancel</button>
-      </a>
-      <button type="submit">Save</button>
-      <p>
-        <label for="category-name" style="font-weight: bold"
-          >Category name:</label
-        >
-        <input
-          type="text"
-          name="category-name"
-          id="category-name"
-          value="<%= locals.prev ? prev['category-name'] : category.name %>"
-          autofocus
-          required
-        />
-      </p>
-      <p>
-        <span style="font-weight: bold">Category ID:</span>
-        <%= category.category_id %>
-      </p>
-      <p>
-        <span style="font-weight: bold">Added at:</span>
-        <%= category.created_at %>
-      </p>
-      <p><span style="font-weight: bold">Products</span></p>
-      <ul>
-        <% products.forEach(product => { %>
-        <li><%= product.name %></li>
-        <% }) %>
-      </ul>
-    </form>
-  </body>
-</html>
+<main>
+  <h2>Category edit</h2>
+  <%- include('../errors/category-errors') %>
+  <form action="/category/<%= category.category_id %>/update" method="post">
+    <a href="/category/<%= category.category_id %>" style="text-decoration: none">
+      <button type="button">Cancel</button>
+    </a>
+    <button type="submit">Save</button>
+    <p>
+      <label for="category-name" style="font-weight: bold">Category name:</label>
+      <input type="text" name="category-name" id="category-name" value="<%= locals.prev ? prev['category-name'] : category.name %>" autofocus required />
+    </p>
+    <p>
+      <span style="font-weight: bold">Category ID:</span>
+      <%= category.category_id %>
+    </p>
+    <p>
+      <span style="font-weight: bold">Added at:</span>
+      <%= category.created_at %>
+    </p>
+    <p><span style="font-weight: bold">Products</span></p>
+    <ul>
+      <% products.forEach(product => { %>
+      <li><%= product.name %></li>
+      <% }) %>
+    </ul>
+  </form>
+</main>

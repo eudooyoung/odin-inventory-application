@@ -23,7 +23,6 @@ const newCategoryPostMiddleware: types.ControllerMiddleware = async (
     const categories = await db.getAllCategories();
     const products = await db.getAllProducts();
     return res.status(400).render("category", {
-      title: "Categories",
       links: links,
       categories: categories,
       products: products,
@@ -43,7 +42,8 @@ const categoryDetailGet: types.ControllerMiddleware = async (req, res) => {
   const categoryId = Number(req.params.categoryId);
   const category = await db.getCategoryById(categoryId);
   const products = await db.getProductsByCategoryId(categoryId);
-  res.render("details/category-detail", {
+  res.render("category", {
+    route: "detail",
     links: links,
     categories: categories,
     category: category,
@@ -56,7 +56,8 @@ const updateCategoryGet: types.ControllerMiddleware = async (req, res) => {
   const categoryId = Number(req.params.categoryId);
   const category = await db.getCategoryById(categoryId);
   const products = await db.getProductsByCategoryId(categoryId);
-  res.render("updates/category-update", {
+  res.render("category", {
+    route: "update",
     links: links,
     categories: categories,
     category: category,
@@ -74,7 +75,8 @@ const updateCategoryPostMiddleware: types.ControllerMiddleware = async (
     const categories = await db.getAllCategories();
     const category = await db.getCategoryById(categoryId);
     const products = await db.getProductsByCategoryId(categoryId);
-    return res.status(400).render("updates/category-update", {
+    return res.status(400).render("category", {
+      route: "update",
       links: links,
       categories: categories,
       category: category,

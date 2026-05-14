@@ -1,51 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fabric Shop</title>
-  </head>
-  <body>
-    <%- include("../headers/header") %>
-    <h2>Categories</h2>
-    <%- include("../headers/category-header") %>
-    <h2>Category detail</h2>
-    <a
-      style="text-decoration: none"
-      href="/category/<%= category.category_id %>/update"
-    >
-      <button>Edit</button>
-    </a>
-    <form
-      style="display: contents"
-      action="/category/<%= category.category_id %>/delete"
-      method="post"
-    >
-      <button
-        type="submit"
-        style="background: red; color: #fff"
-        onclick="return confirm('Are you sure?');"
-      >
-        Delete
-      </button>
-    </form>
-    <p>
-      <span style="font-weight: bold">Category name:</span>
-      <%= category.name %>
-    </p>
-    <p>
-      <span style="font-weight: bold">Category ID:</span>
-      <%= category.category_id %>
-    </p>
-    <p>
-      <span style="font-weight: bold">Added at:</span>
-      <%= category.created_at %>
-    </p>
-    <p><span style="font-weight: bold">Products</span></p>
-    <ul>
-      <% products.forEach(product => { %>
-      <li><%= product.name %></li>
-      <% }) %>
-    </ul>
-  </body>
-</html>
+<main>
+  <h2>Category detail</h2>
+  <form style="display: contents" action="/category/<%= category.category_id %>/delete" method="post">
+    <button type="submit" style="background: red; color: #fff" onclick="return confirm('Are you sure?');">
+      Delete
+    </button>
+  </form>
+  <a style="text-decoration: none" href="/category/<%= category.category_id %>/update">
+    <button>Edit</button>
+  </a>
+  <p>
+    <span style="font-weight: bold">Category name:</span>
+    <%= category.name %>
+  </p>
+  <p>
+    <span style="font-weight: bold">Category ID:</span>
+    <%= category.category_id %>
+  </p>
+  <p>
+    <span style="font-weight: bold">Added at:</span>
+    <%= category.created_at %>
+  </p>
+  <p><span style="font-weight: bold">Products</span></p>
+  <ul>
+    <% products.forEach(product => { %>
+    <li><%= product.name %></li>
+    <% }) %>
+  </ul>
+</main>
