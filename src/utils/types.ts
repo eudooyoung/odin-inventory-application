@@ -1,4 +1,3 @@
-import type Response = require("express");
 import type e = require("express");
 
 export type Middleware = (

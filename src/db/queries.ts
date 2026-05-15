@@ -1,5 +1,5 @@
 import jsConvert = require("js-convert-case");
-import type types = require("../utils/types");
+import types = require("../utils/types");
 import pool = require("./pool");
 import cc = require("../utils/case-converter");
 
@@ -9,8 +9,7 @@ const getAllCategories = async () => {
        from category
       order by category_id`,
   );
-  const converted = cc.nameConverter(rows);
-  return converted;
+  return cc.rowsNameConverter(rows);
 };
 
 const getAllProducts = async () => {
@@ -19,8 +18,7 @@ const getAllProducts = async () => {
        from product
       order by category_id, product_id`,
   );
-  const converted = cc.nameConverter(rows);
-  return converted;
+  return cc.rowsNameConverter(rows);
 };
 
 const getAllOptions = async () => {
@@ -28,8 +26,7 @@ const getAllOptions = async () => {
     `select option_id, name
        from option`,
   );
-  const converted = cc.nameConverter(rows);
-  return converted;
+  return cc.rowsNameConverter(rows);
 };
 
 const getCategoryById = async (categoryId: number) => {
@@ -39,8 +36,7 @@ const getCategoryById = async (categoryId: number) => {
       where category_id = $1`,
     [categoryId],
   );
-  const converted = cc.nameConverter(rows);
-  return converted[0];
+  return cc.rowsNameConverter(rows)[0];
 };
 
 const getProductsByCategoryId = async (categoryId: number) => {
@@ -50,12 +46,10 @@ const getProductsByCategoryId = async (categoryId: number) => {
       where category_id = $1`,
     [categoryId],
   );
-  const converted = cc.nameConverter(rows);
-  return converted;
+  return cc.rowsNameConverter(rows);
 };
 
 const existCategoryByName = async (categoryName: string) => {
-  console.log(categoryName);
   const { rows } = await pool.query(
     `select name 
        from category
@@ -107,14 +101,19 @@ const insertProduct = async ({
   options,
 }: types.ProductInput) => {
   // insert values into product table
-  const { rows } = await pool.query(
+  let { rows } = await pool.query(
     `insert into product (category_id, name, price)
      values ($1, $2, $3)
      returning product_id`,
     [categoryId, productName, productPrice],
   );
-  const converted = cc.keyConverter(rows);
-  const productId = converted[0].productId;
+  rows = cc.rowsKeyConverter(rows);
+  const productId = rows[0].productId;
+
+  await insertProductOption(productId, options);
+};
+
+const insertProductOption = async (productId: number, options: [number]) => {
   const productIds = new Array(options.length).fill(productId);
 
   // insert values into product_option table
@@ -134,7 +133,7 @@ const getProductById = async (productId: number) => {
       where product_id = $1`,
     [productId],
   );
-  return rows[0];
+  return cc.rowsNameConverter(rows)[0];
 };
 
 const getProductWithCategoryNameByProductId = async (productId: number) => {
@@ -146,8 +145,7 @@ const getProductWithCategoryNameByProductId = async (productId: number) => {
       where p.product_id = $1`,
     [productId],
   );
-  const converted = cc.nameConverter(rows);
-  return converted[0];
+  return cc.rowsNameConverter(rows)[0];
 };
 
 const getOptionsByProductId = async (productId: number) => {
@@ -159,7 +157,35 @@ const getOptionsByProductId = async (productId: number) => {
       where p.product_id = $1`,
     [productId],
   );
-  return rows;
+  return cc.rowsNameConverter(rows);
+};
+
+const updateProductById = async (
+  { categoryId, productName, productPrice, options }: types.ProductInput,
+  productId: number,
+) => {
+  await pool.query(
+    `
+    update product
+       set category_id = $1
+         , name = $2
+         , price = $3
+     where product_id = $4`,
+    [categoryId, productName, productPrice, productId],
+  );
+
+  await deleteProductOptionByProductId(productId);
+  await insertProductOption(productId, options);
+};
+
+const deleteProductOptionByProductId = async (productId: number) => {
+  await pool.query(
+    `
+    delete from product_option
+     where product_id = $1
+    `,
+    [productId],
+  );
 };
 
 export = {
@@ -177,4 +203,5 @@ export = {
   insertProduct,
   getProductWithCategoryNameByProductId,
   getOptionsByProductId,
+  updateProductById,
 };

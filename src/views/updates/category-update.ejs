@@ -7,18 +7,18 @@
     </a>
     <button type="submit">Save</button>
     <p>
-      <label for="category-name" style="font-weight: bold">Category name:</label>
-      <input type="text" name="category-name" id="category-name" value="<%= locals.prev ? prev['category-name'] : category.name %>" autofocus required />
+      <label for="category-name">Category name:</label>
+      <input type="text" name="category-name" id="category-name" value="<%= locals.prev ? prev.categoryName : category.name %>" autofocus required />
     </p>
     <p>
-      <span style="font-weight: bold">Category ID:</span>
+      <span>Category ID:</span>
       <%= category.categoryId %>
     </p>
     <p>
-      <span style="font-weight: bold">Added at:</span>
+      <span>Added at:</span>
       <%= category.createdAt %>
     </p>
-    <p><span style="font-weight: bold">Products</span></p>
+    <p><span>Products</span></p>
     <ul>
       <% products.forEach(product => { %>
       <li><%= product.name %></li>

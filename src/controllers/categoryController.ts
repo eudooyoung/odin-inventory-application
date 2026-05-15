@@ -1,11 +1,9 @@
 import type types = require("../utils/types");
 import db = require("../db/queries");
 import links = require("../utils/links");
-import validateRule = require("../utils/validator");
-import validator = require("express-validator");
-import assert = require("node:assert");
-const { validateCategory } = validateRule;
-const { validationResult, matchedData } = validator;
+import vr = require("../utils/validate-rules");
+import v = require("express-validator");
+import cc = require("../utils/case-converter");
 
 const categoryGet: types.Middleware = async (req, res) => {
   const categories = await db.getAllCategories();
@@ -16,7 +14,7 @@ const categoryGet: types.Middleware = async (req, res) => {
 };
 
 const newCategoryPostMiddleware: types.Middleware = async (req, res) => {
-  const errors = validationResult(req);
+  const errors = v.validationResult(req);
   if (!errors.isEmpty()) {
     const categories = await db.getAllCategories();
     const products = await db.getAllProducts();
@@ -28,12 +26,13 @@ const newCategoryPostMiddleware: types.Middleware = async (req, res) => {
       prev: req.body,
     });
   }
-  const { categoryName } = matchedData(req);
+  let { categoryName } = v.matchedData(req);
+  categoryName= cc.toLowerSnakeCase(categoryName);
   await db.insertCategory(categoryName);
   res.redirect("/category");
 };
 
-const newCategoryPost = [validateCategory, newCategoryPostMiddleware];
+const newCategoryPost = [vr.validateCategory, newCategoryPostMiddleware];
 
 const categoryDetailGet: types.Middleware = async (req, res) => {
   const categories = await db.getAllCategories();
@@ -65,7 +64,7 @@ const updateCategoryGet: types.Middleware = async (req, res) => {
 
 const updateCategoryPostMiddleware: types.Middleware = async (req, res) => {
   const categoryId = Number(req.params.categoryId);
-  const errors = validationResult(req);
+  const errors = v.validationResult(req);
   if (!errors.isEmpty()) {
     const categories = await db.getAllCategories();
     const category = await db.getCategoryById(categoryId);
@@ -80,12 +79,13 @@ const updateCategoryPostMiddleware: types.Middleware = async (req, res) => {
       prev: req.body,
     });
   }
-  const { categoryName } = matchedData(req);
+  let { categoryName } = v.matchedData(req);
+  categoryName = cc.toLowerSnakeCase(categoryName);
   await db.updateCategoryById(categoryName, categoryId);
   res.redirect(`/category/${categoryId}`);
 };
 
-const updateCategoryPost = [validateCategory, updateCategoryPostMiddleware];
+const updateCategoryPost = [vr.validateCategory, updateCategoryPostMiddleware];
 
 const deleteCategoryPost: types.Middleware = async (req, res) => {
   const categoryId = Number(req.params.categoryId);

@@ -1,7 +1,7 @@
 import type types = require("../utils/types");
 import db = require("../db/queries");
 import links = require("../utils/links");
-import vr = require("../utils/validator");
+import vr = require("../utils/validate-rules");
 import v = require("express-validator");
 import jsConvert = require("js-convert-case");
 
@@ -18,7 +18,6 @@ const productGet: types.Middleware = async (req, res) => {
 };
 
 const newProductPostMiddleware: types.Middleware = async (req, res) => {
-  console.log(req.body);
   const errors = v.validationResult(req);
   if (!errors.isEmpty()) {
     const categories = await db.getAllCategories();
@@ -46,7 +45,9 @@ const productDetailGet: types.Middleware = async (req, res) => {
   const productId = Number(req.params.productId);
   const productWithCategoryName =
     await db.getProductWithCategoryNameByProductId(productId);
+  console.log(productWithCategoryName);
   const options = await db.getOptionsByProductId(productId);
+  console.log(options);
   res.render("product", {
     route: "detail",
     links: links,
@@ -59,16 +60,59 @@ const productDetailGet: types.Middleware = async (req, res) => {
 const updateProductGet: types.Middleware = async (req, res) => {
   const products = await db.getAllProducts();
   const productId = Number(req.params.productId);
-  const productWithCategoryName =
-    await db.getProductWithCategoryNameByProductId(productId);
-  const options = await db.getOptionsByProductId(productId);
+  const product = await db.getProductById(productId);
+  const categories = await db.getAllCategories();
+  const options = await db.getAllOptions();
+  const productOptions = await db.getOptionsByProductId(productId);
+  const productOptionIds = productOptions.map(
+    (option: { optionId: string }) => option.optionId,
+  );
   res.render("product", {
     route: "update",
     links: links,
     products: products,
-    productWithCategoryName: jsConvert.camelKeys(productWithCategoryName),
+    product: product,
+    categories: categories,
     options: options,
+    productOptionIds: productOptionIds,
   });
 };
 
-export = { productGet, newProductPost, productDetailGet, updateProductGet };
+const updateProductMiddleware: types.Middleware = async (req, res) => {
+  const productId = Number(req.params.productId);
+  const errors = v.validationResult(req);
+  if (!errors.isEmpty()) {
+    const products = await db.getAllProducts();
+    const product = await db.getProductById(productId);
+    const categories = await db.getAllCategories();
+    const options = await db.getAllOptions();
+    const productOptions = await db.getOptionsByProductId(productId);
+    const productOptionIds = productOptions.map(
+      (option: { optionId: string }) => option.optionId,
+    );
+    return res.status(400).render("product", {
+      route: "update",
+      links: links,
+      products: products,
+      product: product,
+      categories: categories,
+      options: options,
+      productOptionIds: productOptionIds,
+      productErrors: errors.array(),
+    });
+  }
+  const data = v.matchedData(req);
+  const converted = jsConvert.camelKeys(data) as types.ProductInput;
+  await db.updateProductById(converted, productId);
+  res.redirect(`/product/${productId}`);
+};
+
+const updateProductPost = [...vr.validateProduct, updateProductMiddleware];
+
+export = {
+  productGet,
+  newProductPost,
+  productDetailGet,
+  updateProductGet,
+  updateProductPost,
+};

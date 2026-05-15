@@ -11,6 +11,11 @@ const priceErr = "must be greater or equal to 0";
 
 const validateCategory = body("categoryName")
   .trim()
+  .if(async (newName, { req }) => {
+    const categoryId = req.params!.categoryId;
+    const { name } = await db.getCategoryById(categoryId);
+    return newName !== name ? Promise.resolve(true) : Promise.reject(false);
+  })
   .matches(/^[a-zA-Z0-9]+(\s[a-zA-Z0-9]+)*$/gm)
   .withMessage(`Category ${nameFormatErr}`)
   .isLength({ min: 1, max: 10 })
@@ -27,6 +32,11 @@ const validateProduct = [
   body("categoryId"),
   body("productName")
     .trim()
+    .if(async (newName, { req }) => {
+      const productId = req.params!.productId;
+      const { name } = await db.getProductById(productId);
+      return newName !== name ? Promise.resolve(true) : Promise.reject(false);
+    })
     .matches(/^[a-zA-Z0-9]+(\s[a-zA-Z0-9]+)*$/gm)
     .withMessage(`Product ${nameFormatErr}`)
     .isLength({ min: 1, max: 10 })
@@ -41,7 +51,7 @@ const validateProduct = [
   body("productPrice")
     .isInt({ min: 0 })
     .withMessage(`Product price ${priceErr}`),
-  body("options")
+  body("options"),
 ];
 
 export = { validateCategory, validateProduct };

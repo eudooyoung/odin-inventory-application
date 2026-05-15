@@ -26,10 +26,10 @@
       <fieldset class="options" style="padding-right: 2rem;">
         <legend>Options</legend>
         <ul>
-          <% options.forEach((option, i) => { %>
+          <% options.forEach(option => { %>
           <li style="display:flex; justify-content: space-between;">
             <label for="o-<%= option.optionId %>"><%= option.name %></label>
-            <input type="checkbox" name="options" id="o-<%= option.optionId %>" value="<%= option.optionId %>" <%= locals.prev && Number(prev.options[i]) === option.optionId && "checked" %>>
+            <input type="checkbox" name="options" id="o-<%= option.optionId %>" value="<%= option.optionId %>" <%= locals.prev && prev.options?.includes(String(option.optionId)) && "checked" %>>
           </li>
           <% }) %>
         </ul>

@@ -6,6 +6,7 @@ const productRouter = ex.Router();
 productRouter.get("/", pc.productGet);
 productRouter.post("/new", pc.newProductPost);
 productRouter.get("/:productId", pc.productDetailGet);
-productRouter.get("/:productId/update", pc.updateProductGet)
+productRouter.get("/:productId/update", pc.updateProductGet);
+productRouter.post("/:productId/update", pc.updateProductPost);
 
 export = productRouter;

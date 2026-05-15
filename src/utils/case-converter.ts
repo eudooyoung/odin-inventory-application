@@ -8,21 +8,34 @@ const caseConverterMiddleware: types.Middleware = (req, res, next) => {
   next!();
 };
 
-const keyConverter = (rows: any) => {
+const rowsKeyConverter = (rows: any) => {
   const converted = rows.map((row: any) => jsConvert.camelKeys(row));
   return converted;
 };
 
-const nameConverter = (rows: any) => {
+const rowNameConverter = (row: any) => {
+  const nameKeys = Object.keys(row).filter((key) => key.includes("name"));
+  nameKeys.forEach((nameKey) => {
+    row[nameKey] = jsConvert.toSentenceCase(row[nameKey]);
+  });
+  return jsConvert.camelKeys(row);
+};
+
+const rowsNameConverter = (rows: any) => {
   const converted = rows.map((row: any) => {
-    row.name = jsConvert.toSentenceCase(row.name);
-    return jsConvert.camelKeys(row);
+    return rowNameConverter(row);
   });
   return converted;
 };
 
+const toLowerSnakeCase = (target: string) => {
+  return jsConvert.toSnakeCase(target).toLowerCase();
+}
+
 export = {
   caseConverterMiddleware,
-  keyConverter,
-  nameConverter,
+  rowsKeyConverter,
+  rowsNameConverter,
+  rowNameConverter,
+  toLowerSnakeCase,
 };

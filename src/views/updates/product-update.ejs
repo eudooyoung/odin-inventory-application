@@ -1,33 +1,49 @@
 <main>
-
   <h2>Product edit</h2>
   <%- include("../errors/product-errors") %>
-  <form action="/product/<%= productWithCategoryName.productId %>/update" method="post">
-    <a style="text-decoration: none" href="/product/<%= productWithCategoryName.productId %>">
+  <form class="product update" action="/product/<%= product.productId %>/update" method="post">
+    <a style="text-decoration: none" href="/product/<%= product.productId %>">
       <button type="button">Cancel</button>
     </a>
     <button type="submit">Save</button>
     <p>
-      <label for="product-name" style="font-weight: bold">Product name:</label>
-      <input type="text" name="product-name" id="product-name" value="<%= locals.prev ? prev.productName : productWithCategoryName.name %>" autofocus required />
+      <label for="product-name">Product name:</label>
+      <input type="text" name="product-name" id="product-name" value="<%= locals.prev ? prev.productName : product.name %>" autofocus required />
     </p>
     <p>
-      <span style="font-weight: bold">Product ID:</span>
-      <%= productWithCategoryName.productId %>
+      <span>Product ID:</span>
+      <%= product.productId %>
     </p>
     <p>
-      <span style="font-weight: bold">Category:</span>
-      <%= productWithCategoryName.categoryName %>
+      <label for="product-price">Price:</label>
+      <input type="number" name="product-price" id="product-price" value="<%= product.price %>">
     </p>
+    <div class="category">
+      <label style="font-weight:bold" for="category-id">Category:</label>
+      <select name="category-id" id="category-id" required>
+        <option value="">Choose a category</option>
+        <% categories.forEach(category => { %>
+        <option <%= category.categoryId === product.categoryId && "selected" %> value="<%= category.categoryId %>">
+          <%= category.name %>
+        </option>
+        <% }) %>
+      </select>
+    </div>
     <p>
-      <span style="font-weight: bold">Added at:</span>
-      <%= productWithCategoryName.createdAt %>
+      <span>Added at:</span>
+      <%= product.createdAt %>
     </p>
-    <p><span style="font-weight: bold">Options</span></p>
-    <ul>
-      <% options.forEach(option => { %>
-      <li><%= option.name %></li>
-      <% }) %>
-    </ul>
+    <fieldset class="options" style="padding-right: 2rem;">
+      <legend>Options</legend>
+      <ul>
+        <% options.forEach(option => { %>
+        <li style="display:flex; justify-content: space-between;">
+          <label for="o-<%= option.optionId %>"><%= option.name %></label>
+          <input type="checkbox" name="options" id="o-<%= option.optionId %>" value="<%= option.optionId %>" <%= productOptionIds.includes(option.optionId) && "checked"  %>>
+        </li>
+        <% }) %>
+      </ul>
+    </fieldset>
+
   </form>
 </main>

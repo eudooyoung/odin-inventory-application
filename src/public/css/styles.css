@@ -6,6 +6,10 @@ a:visited {
   color: blue;
 }
 
+p > label, span {
+  font-weight: bold;
+}
+
 form.product.input {
   max-width: 55rem;
   max-height: 20rem;
@@ -47,7 +51,7 @@ form.product.input {
   grid-area: options;
 }
 
-.product.input > .options > ul {
+.options > ul {
   max-height: 10rem;
   display: flex;
   flex-direction: column;
@@ -55,7 +59,7 @@ form.product.input {
   flex-wrap: wrap;
 }
 
-.product.input > .options > ul > li {
+.options > ul > li {
   max-width: 30%;
 }
 
