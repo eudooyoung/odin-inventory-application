@@ -8,8 +8,9 @@ const caseConverterMiddleware: types.Middleware = (req, res, next) => {
   next!();
 };
 
-const keyConverter = (row: any) => {
-  return jsConvert.camelKeys(row);
+const keyConverter = (rows: any) => {
+  const converted = rows.map((row: any) => jsConvert.camelKeys(row));
+  return converted;
 };
 
 const nameConverter = (rows: any) => {
@@ -20,4 +21,8 @@ const nameConverter = (rows: any) => {
   return converted;
 };
 
-export = { caseConverterMiddleware, keyConverter, nameConverter };
+export = {
+  caseConverterMiddleware,
+  keyConverter,
+  nameConverter,
+};

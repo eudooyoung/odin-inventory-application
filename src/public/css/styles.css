@@ -5,3 +5,60 @@ a {
 a:visited {
   color: blue;
 }
+
+form.product.input {
+  max-width: 55rem;
+  max-height: 20rem;
+
+  display: grid;
+  grid-template-areas:
+    "category product-name product-price"
+    "options options options"
+    "button button button";
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  column-gap: 3rem;
+  row-gap: 1rem;
+  align-items: center;
+}
+
+.product.input > .category {
+  grid-area: category;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product.input > .product.name {
+  grid-area: product-name;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product.input > .product.price {
+  grid-area: product-price;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product.input > .options {
+  grid-area: options;
+}
+
+.product.input > .options > ul {
+  max-height: 10rem;
+  display: flex;
+  flex-direction: column;
+  column-gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.product.input > .options > ul > li {
+  max-width: 30%;
+}
+
+.product.input > button {
+  grid-area: button;
+}

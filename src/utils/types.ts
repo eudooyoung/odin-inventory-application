@@ -1,7 +1,6 @@
 import type Response = require("express");
 import type e = require("express");
 
-
 export type Middleware = (
   req: e.Request,
   res: e.Response,
@@ -12,4 +11,5 @@ export type ProductInput = {
   categoryId: number;
   productName: string;
   productPrice: number;
+  options: [number];
 };

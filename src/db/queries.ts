@@ -55,6 +55,7 @@ const getProductsByCategoryId = async (categoryId: number) => {
 };
 
 const existCategoryByName = async (categoryName: string) => {
+  console.log(categoryName);
   const { rows } = await pool.query(
     `select name 
        from category
@@ -89,25 +90,40 @@ const deleteCategoryById = async (categoryId: number) => {
   );
 };
 
-const findProductByName = async (productName: string) => {
+const existProductByName = async (productName: string) => {
   const { rows } = await pool.query(
-    `select * 
+    `select name 
        from product
       where name = $1`,
     [productName],
   );
-  return rows[0];
+  return rows.length > 0;
 };
 
 const insertProduct = async ({
   categoryId,
   productName,
   productPrice,
+  options,
 }: types.ProductInput) => {
-  await pool.query(
+  // insert values into product table
+  const { rows } = await pool.query(
     `insert into product (category_id, name, price)
-     values ($1, $2, $3)`,
+     values ($1, $2, $3)
+     returning product_id`,
     [categoryId, productName, productPrice],
+  );
+  const converted = cc.keyConverter(rows);
+  const productId = converted[0].productId;
+  const productIds = new Array(options.length).fill(productId);
+
+  // insert values into product_option table
+  await pool.query(
+    `insert into product_option (product_id, option_id)
+     select *
+       from unnest($1::integer[], $2::integer[])
+    `,
+    [productIds, options],
   );
 };
 
@@ -130,7 +146,8 @@ const getProductWithCategoryNameByProductId = async (productId: number) => {
       where p.product_id = $1`,
     [productId],
   );
-  return rows[0];
+  const converted = cc.nameConverter(rows);
+  return converted[0];
 };
 
 const getOptionsByProductId = async (productId: number) => {
@@ -156,7 +173,7 @@ export = {
   updateCategoryById,
   deleteCategoryById,
   getProductById,
-  findProductByName,
+  existProductByName,
   insertProduct,
   getProductWithCategoryNameByProductId,
   getOptionsByProductId,

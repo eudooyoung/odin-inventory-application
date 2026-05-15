@@ -3,33 +3,33 @@
   <p>Fill the form below to add a new product</p>
   <section>
     <h3>New Product</h3>
-    <form style="display:grid; row-gap:1rem; max-width:20rem; justify-content: center; " action="/product/new" method="post">
-      <div>
+    <form class="product input" action="/product/new" method="post">
+      <div class="category">
         <label for="category-id">Category:</label>
         <select name="category-id" id="category-id" required>
-          <option value="" disabled <%= !locals.prev && 'selected'%>>Choose a category</option>
+          <option value="" disabled <%= !locals.prev && "selected" %>>Choose a category</option>
           <% categories.forEach(category => { %>
-          <option <%= locals.prev && Number(prev.categoryId) === category.categoryId && 'selected' %> value="<%= category.categoryId %>">
+          <option <%= locals.prev && Number(prev.categoryId) === category.categoryId && "selected" %> value="<%= category.categoryId %>">
             <%= category.name %>
           </option>
           <% }) %>
         </select>
       </div>
-      <div>
+      <div class="product name">
         <label for="product-name">Name:</label>
         <input type="text" name="product-name" id="product-name" value="<%= locals.prev && prev.productName %>" required />
       </div>
-      <div>
+      <div class="product price">
         <label for="product-price">Price:</label>
-        <input type="number" name="product-price" id="product-price" value="<%= locals.prev && prev.productName %>" required />
+        <input type="number" name="product-price" id="product-price" value="<%= locals.prev && prev.productPrice %>" required />
       </div>
-      <fieldset style="padding-right: 2rem;">
+      <fieldset class="options" style="padding-right: 2rem;">
         <legend>Options</legend>
         <ul>
-          <% options.forEach(option => { %>
+          <% options.forEach((option, i) => { %>
           <li style="display:flex; justify-content: space-between;">
             <label for="o-<%= option.optionId %>"><%= option.name %></label>
-            <input type="checkbox" name="options" id="o-<%= option.optionId %>">
+            <input type="checkbox" name="options" id="o-<%= option.optionId %>" value="<%= option.optionId %>" <%= locals.prev && Number(prev.options[i]) === option.optionId && "checked" %>>
           </li>
           <% }) %>
         </ul>

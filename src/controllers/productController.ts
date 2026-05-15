@@ -17,25 +17,25 @@ const productGet: types.Middleware = async (req, res) => {
   });
 };
 
-const newProductPostMiddleware: types.Middleware = async (
-  req,
-  res,
-) => {
+const newProductPostMiddleware: types.Middleware = async (req, res) => {
+  console.log(req.body);
   const errors = v.validationResult(req);
   if (!errors.isEmpty()) {
     const categories = await db.getAllCategories();
     const products = await db.getAllProducts();
+    const options = await db.getAllOptions();
     return res.status(400).render("product", {
       links: links,
       products: products,
       categories: categories,
+      options: options,
       productErrors: errors.array(),
       prev: req.body,
     });
   }
   const data = v.matchedData(req);
-  const coverted = jsConvert.camelKeys(data) as types.ProductInput;
-  await db.insertProduct(coverted);
+  const converted = jsConvert.camelKeys(data) as types.ProductInput;
+  await db.insertProduct(converted);
   res.redirect("/product");
 };
 
