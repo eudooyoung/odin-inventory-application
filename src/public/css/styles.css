@@ -6,12 +6,47 @@
   box-sizing: border-box;
 }
 
+:root {
+  --sub-header-rows: 3rem auto;
+  --sub-header-list-margin: 0 1rem;
+  --main-rows-divided-2: 6rem auto;
+  --main-rows-divided-3: 3rem 3rem auto;
+  --main-rows-divided-5: repeat(4, 2.5rem) auto;
+  --main-rows-divided-7: repeat(6, 3rem) auto;
+  --main-list-margin: 0.5rem 1rem;
+  --color: #3f3f3f;
+  --link-color: forestgreen;
+  --error-color: brown;
+  --buttons-gap: 1rem;
+  --delete-button-background: crimson;
+  --button-padding: 0.4rem 0.6rem;
+}
+
+body {
+  max-width: calc(1980px * 0.8);
+  min-height: 100dvh;
+  margin: 0 auto;
+  color: var(--color);
+
+  display: grid;
+  grid-template-rows: 8rem 10rem auto;
+}
+
+body > .sub-header > ul {
+  margin: var(--sub-header-list-margin);
+}
+
+main .sub-header ul {
+  margin: var(--main-list-margin);
+}
+
 a {
   text-decoration: none;
+  color: var(--link-color);
 }
 
 a:visited {
-  color: blue;
+  color: var(--link-color);
 }
 
 p > label,
@@ -19,64 +54,157 @@ span {
   font-weight: bold;
 }
 
-/* body {
-  display: grid;
-  grid-template-rows: 10rem 10fr auto;
-} */
+.error {
+  color: var(--error-color);
+}
 
-form.product.input {
-  max-width: 55rem;
+header {
+  display: grid;
+  align-items: center;
+}
+
+body > .sub-header {
+  display: grid;
+  grid-template-rows: var(--sub-header-rows);
+}
+
+button {
+  padding: var(--button-padding);
+}
+
+main.add.category {
+  display: grid;
+  grid-template-rows: var(--main-rows-divided-2);
+}
+
+.add .guide {
+  display: grid;
+}
+
+.add.category .form-wrapper {
+  display: grid;
+  grid-template-rows: var(--main-rows-divided-3);
+}
+
+main.category.detail {
+  display: grid;
+  grid-template-rows: var(--main-rows-divided-3);
+}
+
+.detail .buttons {
+  display: flex;
+  gap: var(--buttons-gap);
+}
+
+button.delete {
+  background-color: var(--delete-button-background);
+}
+
+.detail .information {
+  display: grid;
+  grid-template-rows: var(--main-rows-divided-5);
+}
+
+.information ul, .update ul {
+  margin: 0 2rem;
+}
+
+main.update.category {
+  display: grid;
+  grid-template-rows: var(--main-rows-divided-3);
+}
+
+.update form {
+  display: grid;
+  grid-template-rows: var(--main-rows-divided-7);
+}
+
+.update .buttons {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--buttons-gap);
+}
+
+body > .sub-header.product ul {
+  max-height: 6rem;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  column-gap: 3rem;
+}
+
+body > .sub-header li {
+  max-width: 30%
+}
+
+main.add.product {
+  display: grid;
+  grid-template-rows: var(--main-rows-divided-2);
+}
+
+.add.product .form-wrapper {
+  display: grid;
+  grid-template-rows: 3rem auto;
+}
+
+.add.product form {
+  max-width: 70rem;
   max-height: 20rem;
 
   display: grid;
   grid-template-areas:
-    "category product-name product-price"
-    "options options options"
-    "button button button";
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+    "category product-name product-price .."
+    "options options options options"
+    "button button button button";
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 5rem auto 3rem;
   column-gap: 3rem;
   row-gap: 1rem;
   align-items: center;
 }
 
-.product.input > .category {
+.add.product .input.category {
   grid-area: category;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.product.input > .product.name {
+.add.product .input.product-name {
   grid-area: product-name;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.product.input > .product.price {
+.add.product .input.product-price {
   grid-area: product-price;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.product.input > .options {
+.add.product .input.options {
   grid-area: options;
+  padding: 1rem;
+  overflow-y: scroll;
 }
 
-.options > ul {
-  max-height: 10rem;
+.input.options > ul {
+  max-height: 12rem;
   display: flex;
   flex-direction: column;
   column-gap: 2rem;
   flex-wrap: wrap;
 }
 
-.options > ul > li {
+.input.options > li {
   max-width: 30%;
 }
 
-.product.input > button {
+.add.product button {
   grid-area: button;
+  justify-self: center;
 }

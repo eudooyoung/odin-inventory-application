@@ -1,29 +1,33 @@
-<main>
-  <h2>Category detail</h2>
-  <form style="display: contents" action="/category/<%= category.categoryId %>/delete" method="post">
-    <button type="submit" style="background: red; color: #fff" onclick="return confirm('Are you sure?');">
-      Delete
-    </button>
-  </form>
-  <a style="text-decoration: none" href="/category/<%= category.categoryId %>/update">
-    <button>Edit</button>
-  </a>
-  <p>
-    <span style="font-weight: bold">Category name:</span>
-    <%= category.name %>
-  </p>
-  <p>
-    <span style="font-weight: bold">Category ID:</span>
-    <%= category.categoryId %>
-  </p>
-  <p>
-    <span style="font-weight: bold">Added at:</span>
-    <%= category.createdAt %>
-  </p>
-  <p><span style="font-weight: bold">Products</span></p>
-  <ul>
-    <% products.forEach(product => { %>
-    <li><%= product.name %></li>
-    <% }) %>
-  </ul>
+<main class="detail category">
+  <h2 class="heading detail">Category detail</h2>
+  <div class="buttons">
+    <form action="/category/<%= category.categoryId %>/delete" method="post">
+      <button class="delete" type="submit" onclick="return confirm('Are you sure?');">
+        Delete
+      </button>
+    </form>
+    <a href="/category/<%= category.categoryId %>/update">
+      <button class="cancel">Edit</button>
+    </a>
+  </div>
+  <div class="information">
+    <p>
+      <span>Category name:</span>
+      <%= category.name %>
+    </p>
+    <p>
+      <span>Category ID:</span>
+      <%= category.categoryId %>
+    </p>
+    <p>
+      <span>Added at:</span>
+      <%= category.createdAt %>
+    </p>
+    <p><span>Products</span></p>
+    <ul class="products">
+      <% products.forEach(product => { %>
+      <li><%= product.name %></li>
+      <% }) %>
+    </ul>
+  </div>
 </main>

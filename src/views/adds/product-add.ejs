@@ -1,10 +1,12 @@
-<main>
-  <h2>Add new product</h2>
-  <p>Fill the form below to add a new product</p>
-  <section>
+<main class="add product">
+  <section class="guide">
+    <h2>Add new product</h2>
+    <p>Fill the form below to add a new product</p>
+  </section>
+  <section class="form-wrapper">
     <h3>New Product</h3>
-    <form class="product input" action="/product/new" method="post">
-      <div class="category">
+    <form action="/product/new" method="post">
+      <div class="input category">
         <label for="category-id">Category:</label>
         <select name="category-id" id="category-id" required>
           <option value="" disabled <%= !locals.prev && "selected" %>>Choose a category</option>
@@ -15,15 +17,15 @@
           <% }) %>
         </select>
       </div>
-      <div class="product name">
+      <div class="input product-name">
         <label for="product-name">Name:</label>
         <input type="text" name="product-name" id="product-name" value="<%= locals.prev && prev.productName %>" required />
       </div>
-      <div class="product price">
+      <div class="input product-price">
         <label for="product-price">Price:</label>
         <input type="number" name="product-price" id="product-price" value="<%= locals.prev && prev.productPrice %>" required />
       </div>
-      <fieldset class="options" style="padding-right: 2rem;">
+      <fieldset class="input options">
         <legend>Options</legend>
         <ul>
           <% options.forEach(option => { %>
@@ -34,7 +36,7 @@
           <% }) %>
         </ul>
       </fieldset>
-      <button style="justify-self:center" type="submit">Create</button>
+      <button type="submit">Create</button>
     </form>
     <%- include("../errors/product-errors") %>
   </section>

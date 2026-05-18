@@ -1,11 +1,13 @@
-<main>
+<main class="update category">
   <h2>Category edit</h2>
-  <%- include('../errors/category-errors') %>
   <form action="/category/<%= category.categoryId %>/update" method="post">
-    <a href="/category/<%= category.categoryId %>" style="text-decoration: none">
-      <button type="button">Cancel</button>
-    </a>
-    <button type="submit">Save</button>
+    <div class="buttons">
+      <a href="/category/<%= category.categoryId %>" style="text-decoration: none">
+        <button type="button">Cancel</button>
+      </a>
+      <button type="submit">Save</button>
+    </div>
+    <%- include('../errors/category-errors') %>
     <p>
       <label for="category-name">Category name:</label>
       <input type="text" name="category-name" id="category-name" value="<%= locals.prev ? prev.categoryName : category.name %>" autofocus required />

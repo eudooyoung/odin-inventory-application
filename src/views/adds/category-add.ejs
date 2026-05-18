@@ -1,21 +1,17 @@
-<main>
-  <h2>Add new category</h2>
-  <p>Fill the form below to add a new category</p>
-  <section>
+<main class="add category">
+  <section class="guide">
+    <h2>Add new category</h2>
+    <p>Fill the form below to add a new category</p>
+  </section>
+  <section class="form-wrapper">
     <h3>New Category</h3>
     <div>
       <form action="/category/new" method="post">
         <label for="category-name">Name: </label>
-        <input
-          type="text"
-          name="category-name"
-          id="category-name"
-          value="<%= locals.prev && prev.categoryName %>"
-          required
-        />
+        <input type="text" name="category-name" id="category-name" value="<%= locals.prev && prev.categoryName %>" required />
         <button type="submit">Create</button>
       </form>
-      <%- include("../errors/category-errors") %>
     </div>
+    <%- include("../errors/category-errors") %>
   </section>
 </main>
