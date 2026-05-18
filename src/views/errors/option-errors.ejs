@@ -1,0 +1,7 @@
+<% if (locals.optionErrors) { %>
+<ul>
+  <% optionErrors.forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>

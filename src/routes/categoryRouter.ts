@@ -1,22 +1,15 @@
 import express = require("express");
 import categoryController = require("../controllers/categoryController");
 const { Router } = express;
-const {
-  categoryGet,
-  categoryDetailGet,
-  newCategoryPost,
-  updateCategoryGet,
-  updateCategoryPost,
-  deleteCategoryPost,
-} = categoryController;
+const cc = categoryController;
 
 const categoryRouter = Router();
 
-categoryRouter.get("/", categoryGet);
-categoryRouter.get("/:categoryId", categoryDetailGet);
-categoryRouter.post("/new", newCategoryPost);
-categoryRouter.get("/:categoryId/update", updateCategoryGet);
-categoryRouter.post("/:categoryId/update", updateCategoryPost);
-categoryRouter.post("/:categoryId/delete", deleteCategoryPost)
+categoryRouter.get("/", cc.categoryGet);
+categoryRouter.post("/new", cc.newCategoryPost);
+categoryRouter.get("/:categoryId", cc.categoryDetailGet);
+categoryRouter.get("/:categoryId/update", cc.updateCategoryGet);
+categoryRouter.post("/:categoryId/update", cc.updateCategoryPost);
+categoryRouter.post("/:categoryId/delete", cc.deleteCategoryPost);
 
 export = categoryRouter;

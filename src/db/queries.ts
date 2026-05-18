@@ -1,6 +1,6 @@
 import types = require("../utils/types");
 import pool = require("./pool");
-import cc = require("../utils/case-converter");
+import converter = require("../utils/case-converter");
 
 const getAllCategories = async () => {
   const { rows } = await pool.query(
@@ -8,7 +8,7 @@ const getAllCategories = async () => {
        from category
       order by category_id`,
   );
-  return cc.rowsNameConverter(rows);
+  return converter.rowsNameConverter(rows);
 };
 
 const getAllProducts = async () => {
@@ -17,7 +17,7 @@ const getAllProducts = async () => {
        from product
       order by category_id, product_id`,
   );
-  return cc.rowsNameConverter(rows);
+  return converter.rowsNameConverter(rows);
 };
 
 const getAllOptions = async () => {
@@ -25,7 +25,7 @@ const getAllOptions = async () => {
     `select option_id, name
        from option`,
   );
-  return cc.rowsNameConverter(rows);
+  return converter.rowsNameConverter(rows);
 };
 
 const getCategoryById = async (categoryId: number) => {
@@ -35,7 +35,7 @@ const getCategoryById = async (categoryId: number) => {
       where category_id = $1`,
     [categoryId],
   );
-  return cc.rowsNameConverter(rows)[0];
+  return converter.rowsNameConverter(rows)[0];
 };
 
 const getProductsByCategoryId = async (categoryId: number) => {
@@ -45,7 +45,7 @@ const getProductsByCategoryId = async (categoryId: number) => {
       where category_id = $1`,
     [categoryId],
   );
-  return cc.rowsNameConverter(rows);
+  return converter.rowsNameConverter(rows);
 };
 
 const existCategoryByName = async (categoryName: string) => {
@@ -106,29 +106,32 @@ const existProductByName = async (productName: string) => {
   return rows.length > 0;
 };
 
+// insert values into product table
 const insertProduct = async ({
   categoryId,
   productName,
   productPrice,
   options,
 }: types.ProductInput) => {
-  // insert values into product table
   let { rows } = await pool.query(
     `insert into product (category_id, name, price)
      values ($1, $2, $3)
      returning product_id`,
     [categoryId, productName, productPrice],
   );
-  rows = cc.rowsKeyConverter(rows);
+  rows = converter.rowsKeyConverter(rows);
   const productId = rows[0].productId;
 
   await insertProductOption(productId, options);
 };
 
+// insert values into product_option table
 const insertProductOption = async (productId: number, options: [number]) => {
+  if (!Array.isArray(options)) {
+    options = [options];
+  }
   const productIds = new Array(options.length).fill(productId);
 
-  // insert values into product_option table
   await pool.query(
     `insert into product_option (product_id, option_id)
      select *
@@ -145,7 +148,7 @@ const getProductById = async (productId: number) => {
       where product_id = $1`,
     [productId],
   );
-  return cc.rowsNameConverter(rows)[0];
+  return converter.rowsNameConverter(rows)[0];
 };
 
 const getProductWithCategoryNameByProductId = async (productId: number) => {
@@ -157,19 +160,19 @@ const getProductWithCategoryNameByProductId = async (productId: number) => {
       where p.product_id = $1`,
     [productId],
   );
-  return cc.rowsNameConverter(rows)[0];
+  return converter.rowsNameConverter(rows)[0];
 };
 
 const getOptionsByProductId = async (productId: number) => {
   const { rows } = await pool.query(
-    `select o.option_id, o.name
+    `select o.option_id, o.name, o.price
        from product_option p
        join option o
          on p.option_id = o.option_id
       where p.product_id = $1`,
     [productId],
   );
-  return cc.rowsNameConverter(rows);
+  return converter.rowsNameConverter(rows);
 };
 
 const existProductByNameNotId = async (
@@ -223,6 +226,76 @@ const deleteProductById = async (productId: number) => {
   );
 };
 
+const existOptionByName = async (optionName: string) => {
+  const { rows } = await pool.query(
+    `select name
+       from option
+      where name = $1`,
+    [optionName],
+  );
+  return rows.length > 0;
+};
+
+const insertOption = async (optionName: string, optionPrice: number) => {
+  await pool.query(
+    `
+    insert into option (name, price)
+    values ($1, $2)
+    `,
+    [optionName, optionPrice],
+  );
+};
+
+const getOptionById = async (optionId: number) => {
+  const { rows } = await pool.query(
+    `
+    select *
+      from option
+     where option_id = $1
+    `,
+    [optionId],
+  );
+  return converter.rowNameConverter(rows[0]);
+};
+
+const existOptionByNameNotId = async (optionName: string, optionId: number) => {
+  const { rows } = await pool.query(
+    `
+    select name
+      from option
+     where name = $1 and option_id <> $2
+    `,
+    [optionName, optionId],
+  );
+  return rows.length > 0;
+};
+
+const updateOptionById = async ({
+  optionId,
+  optionName,
+  optionPrice,
+}: types.OptionInput) => {
+  await pool.query(
+    `
+    update option
+       set name = $1
+         , price = $2
+     where option_id = $3
+    `,
+    [optionName, optionPrice, optionId],
+  );
+};
+
+const deleteOptionById = async (optionId: number) => {
+  await pool.query(
+    `
+    delete from option
+     where option_id = $1
+    `,
+    [optionId],
+  );
+};
+
 export = {
   getAllCategories,
   getAllProducts,
@@ -242,4 +315,10 @@ export = {
   getOptionsByProductId,
   updateProductById,
   deleteProductById,
+  existOptionByName,
+  insertOption,
+  getOptionById,
+  existOptionByNameNotId,
+  updateOptionById,
+  deleteOptionById,
 };

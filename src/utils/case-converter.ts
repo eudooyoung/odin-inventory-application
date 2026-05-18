@@ -5,7 +5,7 @@ import type e = require("express");
 const caseConverterMiddleware: types.Middleware = (req, res, next) => {
   if (req.body) {
     Object.entries(req.body).forEach(([key, value]) => {
-      if (typeof value === "string") {
+      if (typeof value === "string" && !key.match(/price/i)) {
         req.body[key] = toLowerSnakeCase(value);
       }
     });
@@ -40,7 +40,7 @@ const toLowerSnakeCase = (target: string) => {
 
 const prevBodyCaseConverter = (body: any) => {
   Object.entries(body).forEach(([key, value]) => {
-    if (typeof value === "string") {
+    if (typeof value === "string" && !key.match(/price/i)) {
       body[key] = jsConvert.toSentenceCase(value);
     }
   });

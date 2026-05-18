@@ -12,3 +12,9 @@ export type ProductInput = {
   productPrice: number;
   options: [number];
 };
+
+export type OptionInput = {
+  optionId: number;
+  optionName: string;
+  optionPrice: number;
+};

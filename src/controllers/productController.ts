@@ -4,7 +4,7 @@ import links = require("../utils/links");
 import vr = require("../utils/validate-rules");
 import v = require("express-validator");
 import jsConvert = require("js-convert-case");
-import cc = require("../utils/case-converter");
+import converter = require("../utils/case-converter");
 
 const productGet: types.Middleware = async (req, res) => {
   const categories = await db.getAllCategories();
@@ -30,12 +30,15 @@ const newProductPostMiddleware: types.Middleware = async (req, res) => {
       categories: categories,
       options: options,
       productErrors: errors.array(),
-      prev: cc.prevBodyCaseConverter(req.body),
+      prev: converter.prevBodyCaseConverter(req.body),
     });
   }
-  const data = v.matchedData(req);
-  const converted = jsConvert.camelKeys(data) as types.ProductInput;
-  await db.insertProduct(converted);
+  let data = v.matchedData(req) as types.ProductInput;
+  data = {
+    ...data,
+    productPrice: Number(data.productPrice),
+  };
+  await db.insertProduct(data);
   res.redirect("/product");
 };
 
@@ -100,9 +103,9 @@ const updateProductMiddleware: types.Middleware = async (req, res) => {
       productErrors: errors.array(),
     });
   }
-  const data = v.matchedData(req);
-  const converted = jsConvert.camelKeys(data) as types.ProductInput;
-  await db.updateProductById(converted, productId);
+  let data = v.matchedData(req) as types.ProductInput;
+  data = { ...data, productPrice: Number(data.productPrice) };
+  await db.updateProductById(data, productId);
   res.redirect(`/product/${productId}`);
 };
 

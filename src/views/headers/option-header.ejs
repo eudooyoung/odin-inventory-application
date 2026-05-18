@@ -1,10 +1,10 @@
-<section>
+<section class="sub-header">
   <h2>Options</h2>
   <% if (locals.options) { %>
   <ul>
     <% options.forEach(option => { %>
     <li>
-      <a href="option/<%= option.option_id %>"><%= option.name %></a>
+      <a href="/option/<%= option.optionId %>"><%= option.name %></a>
     </li>
     <% }) %>
   </ul>

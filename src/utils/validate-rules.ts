@@ -82,9 +82,45 @@ const validateUpdateProduct = [
   body("options"),
 ];
 
+const validateNewOption = [
+  body("optionName")
+    .trim()
+    .matches(/^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$/gm)
+    .withMessage(`Option ${nameFormatErr}`)
+    .isLength({ min: 1, max: 10 })
+    .withMessage(`Option ${nameLengthErr}`)
+    .custom(async (optionName) => {
+      const isDuplicate = await db.existOptionByName(optionName);
+      if (isDuplicate) {
+        return Promise.reject(`Option ${duplicateErr}`);
+      }
+    }),
+  body("optionPrice").isInt({ min: 0 }).withMessage(`Option price ${priceErr}`),
+];
+
+const validateUpdateOption = [
+  body("optionId"),
+  body("optionName")
+    .trim()
+    .matches(/^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$/gm)
+    .withMessage(`Option ${nameFormatErr}`)
+    .isLength({ min: 1, max: 10 })
+    .withMessage(`Option ${nameLengthErr}`)
+    .custom(async (optionName, { req }) => {
+      const optionId = Number(req.params!.optionId);
+      const isDuplicate = await db.existOptionByNameNotId(optionName, optionId);
+      if (isDuplicate) {
+        return Promise.reject(`Option ${duplicateErr}`);
+      }
+    }),
+  body("optionPrice").isInt({ min: 0 }).withMessage(`Option price ${priceErr}`),
+];
+
 export = {
   validateNewCategory,
   validateUpdateCategory,
   validateNewProduct,
   validateUpdateProduct,
+  validateNewOption,
+  validateUpdateOption,
 };

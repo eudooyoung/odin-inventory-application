@@ -1,7 +1,7 @@
 <% if (locals.productErrors) { %>
 <ul>
-  <% productErrors.forEach(productError => { %>
-  <li><%= productError.msg %></li>
+  <% productErrors.forEach(error => { %>
+  <li><%= error.msg %></li>
   <% }) %>
 </ul>
 <% } %>

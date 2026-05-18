@@ -10,13 +10,15 @@
 
 <body>
   <%- include("headers/header") %>
-  <h2>Home</h2>
-  <p>Fabric Shop Inventory Managing Systeam</p>
-  <div style="display: flex; gap: 10rem">
+  <section class="sub-header">
+    <h2>Home</h2>
+    <p>Fabric Shop Inventory Managing Systeam</p>
+  </section>
+  <main style="display: flex; gap: 10rem">
     <%- include("headers/category-header") %>
     <%- include("headers/product-header") %>
     <%- include("headers/option-header") %>
-  </div>
+  </main>
 </body>
 
 </html>

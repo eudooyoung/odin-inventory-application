@@ -1,0 +1,25 @@
+<main>
+  <h2>Option edit</h2>
+  <%- include('../errors/option-errors') %>
+  <form action="/option/<%= option.optionId %>/update" method="post">
+    <a href="/option/<%= option.optionId %>" style="text-decoration: none">
+      <button type="button">Cancel</button>
+    </a>
+    <button type="submit">Save</button>
+    <p>
+      <label for="option-name">Option name:</label>
+      <input type="text" name="option-name" id="option-name" value="<%= locals.prev ? prev.optionName : option.name %>" autofocus required />
+    </p>
+    <p>
+      <span>Option ID:</span>
+      <%= option.optionId %>
+    </p>
+    <p><label for="option-price">Price</label>
+      <input type="number" name="option-price" id="option-price" value="<%= locals.prev ? prev.optionName : option.price %>" required>
+    </p>
+    <p>
+      <span>Added at:</span>
+      <%= option.createdAt %>
+    </p>
+  </form>
+</main>

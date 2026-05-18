@@ -3,7 +3,7 @@ import db = require("../db/queries");
 import links = require("../utils/links");
 import vr = require("../utils/validate-rules");
 import v = require("express-validator");
-import cc = require("../utils/case-converter");
+import converter = require("../utils/case-converter");
 
 const categoryGet: types.Middleware = async (req, res) => {
   const categories = await db.getAllCategories();
@@ -23,7 +23,7 @@ const newCategoryPostMiddleware: types.Middleware = async (req, res) => {
       categories: categories,
       products: products,
       categoryErrors: errors.array(),
-      prev: cc.prevBodyCaseConverter(req.body),
+      prev: converter.prevBodyCaseConverter(req.body),
     });
   }
   const { categoryName } = v.matchedData(req);
@@ -75,11 +75,11 @@ const updateCategoryPostMiddleware: types.Middleware = async (req, res) => {
       category: category,
       products: products,
       categoryErrors: errors.array(),
-      prev: cc.prevBodyCaseConverter(req.body),
+      prev: converter.prevBodyCaseConverter(req.body),
     });
   }
   let { categoryName } = v.matchedData(req);
-  categoryName = cc.toLowerSnakeCase(categoryName);
+  categoryName = converter.toLowerSnakeCase(categoryName);
   await db.updateCategoryById(categoryName, categoryId);
   res.redirect(`/category/${categoryId}`);
 };
