@@ -1,4 +1,3 @@
-import jsConvert = require("js-convert-case");
 import types = require("../utils/types");
 import pool = require("./pool");
 import cc = require("../utils/case-converter");
@@ -65,6 +64,19 @@ const insertCategory = async (categoryName: string) => {
      values ($1)`,
     [categoryName],
   );
+};
+
+const existCategoryByNameNotId = async (
+  categoryName: string,
+  categoryId: number,
+) => {
+  const { rows } = await pool.query(
+    `select name 
+       from category
+      where name = $1 and category_id not $2`,
+    [categoryName, categoryId],
+  );
+  return rows.length > 0;
 };
 
 const updateCategoryById = async (categoryName: string, categoryId: number) => {
@@ -196,6 +208,7 @@ export = {
   getProductsByCategoryId,
   existCategoryByName,
   insertCategory,
+  existCategoryByNameNotId,
   updateCategoryById,
   deleteCategoryById,
   getProductById,

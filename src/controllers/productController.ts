@@ -4,6 +4,7 @@ import links = require("../utils/links");
 import vr = require("../utils/validate-rules");
 import v = require("express-validator");
 import jsConvert = require("js-convert-case");
+import cc = require("../utils/case-converter");
 
 const productGet: types.Middleware = async (req, res) => {
   const categories = await db.getAllCategories();
@@ -29,7 +30,7 @@ const newProductPostMiddleware: types.Middleware = async (req, res) => {
       categories: categories,
       options: options,
       productErrors: errors.array(),
-      prev: req.body,
+      prev: cc.prevBodyCaseConverter(req.body),
     });
   }
   const data = v.matchedData(req);
@@ -45,9 +46,7 @@ const productDetailGet: types.Middleware = async (req, res) => {
   const productId = Number(req.params.productId);
   const productWithCategoryName =
     await db.getProductWithCategoryNameByProductId(productId);
-  console.log(productWithCategoryName);
   const options = await db.getOptionsByProductId(productId);
-  console.log(options);
   res.render("product", {
     route: "detail",
     links: links,
@@ -99,6 +98,7 @@ const updateProductMiddleware: types.Middleware = async (req, res) => {
       options: options,
       productOptionIds: productOptionIds,
       productErrors: errors.array(),
+      prev: cc.prevBodyCaseConverter(req.body),
     });
   }
   const data = v.matchedData(req);

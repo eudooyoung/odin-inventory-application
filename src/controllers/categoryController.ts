@@ -23,16 +23,15 @@ const newCategoryPostMiddleware: types.Middleware = async (req, res) => {
       categories: categories,
       products: products,
       categoryErrors: errors.array(),
-      prev: req.body,
+      prev: cc.prevBodyCaseConverter(req.body),
     });
   }
-  let { categoryName } = v.matchedData(req);
-  categoryName= cc.toLowerSnakeCase(categoryName);
+  const { categoryName } = v.matchedData(req);
   await db.insertCategory(categoryName);
   res.redirect("/category");
 };
 
-const newCategoryPost = [vr.validateCategory, newCategoryPostMiddleware];
+const newCategoryPost = [vr.validateNewCategory, newCategoryPostMiddleware];
 
 const categoryDetailGet: types.Middleware = async (req, res) => {
   const categories = await db.getAllCategories();
@@ -76,7 +75,7 @@ const updateCategoryPostMiddleware: types.Middleware = async (req, res) => {
       category: category,
       products: products,
       categoryErrors: errors.array(),
-      prev: req.body,
+      prev: cc.prevBodyCaseConverter(req.body),
     });
   }
   let { categoryName } = v.matchedData(req);
@@ -85,7 +84,10 @@ const updateCategoryPostMiddleware: types.Middleware = async (req, res) => {
   res.redirect(`/category/${categoryId}`);
 };
 
-const updateCategoryPost = [vr.validateCategory, updateCategoryPostMiddleware];
+const updateCategoryPost = [
+  vr.validateUpdateCategory,
+  updateCategoryPostMiddleware,
+];
 
 const deleteCategoryPost: types.Middleware = async (req, res) => {
   const categoryId = Number(req.params.categoryId);

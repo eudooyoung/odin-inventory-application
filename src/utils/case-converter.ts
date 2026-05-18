@@ -1,8 +1,14 @@
 import jsConvert = require("js-convert-case");
 import type types = require("./types");
+import type e = require("express");
 
 const caseConverterMiddleware: types.Middleware = (req, res, next) => {
   if (req.body) {
+    Object.entries(req.body).forEach(([key, value]) => {
+      if (typeof value === "string") {
+        req.body[key] = toLowerSnakeCase(value);
+      }
+    });
     req.body = jsConvert.camelKeys(req.body);
   }
   next!();
@@ -30,7 +36,16 @@ const rowsNameConverter = (rows: any) => {
 
 const toLowerSnakeCase = (target: string) => {
   return jsConvert.toSnakeCase(target).toLowerCase();
-}
+};
+
+const prevBodyCaseConverter = (body: any) => {
+  Object.entries(body).forEach(([key, value]) => {
+    if (typeof value === "string") {
+      body[key] = jsConvert.toSentenceCase(value);
+    }
+  });
+  return body;
+};
 
 export = {
   caseConverterMiddleware,
@@ -38,4 +53,5 @@ export = {
   rowsNameConverter,
   rowNameConverter,
   toLowerSnakeCase,
+  prevBodyCaseConverter,
 };

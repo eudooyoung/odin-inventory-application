@@ -3,26 +3,36 @@ import db = require("../db/queries");
 import validator = require("express-validator");
 const { body } = validator;
 
-const nameFormatErr =
-  "must only contain letters and numbers spaced by single spaces.";
+const nameFormatErr = "must only contain letters and numbers";
 const nameLengthErr = "must be between 1 and 10 characters.";
 const duplicateErr = "already in use.";
 const priceErr = "must be greater or equal to 0";
 
-const validateCategory = body("categoryName")
+const validateNewCategory = body("categoryName")
   .trim()
-  .if(async (newName, { req }) => {
-    const categoryId = req.params!.categoryId;
-    const { name } = await db.getCategoryById(categoryId);
-    return newName !== name ? Promise.resolve(true) : Promise.reject(false);
-  })
-  .matches(/^[a-zA-Z0-9]+(\s[a-zA-Z0-9]+)*$/gm)
+  .matches(/^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$/gm)
   .withMessage(`Category ${nameFormatErr}`)
   .isLength({ min: 1, max: 10 })
   .withMessage(`Category ${nameLengthErr}`)
   .custom(async (categoryName) => {
-    const converted = jsConvert.toSnakeCase(categoryName).toLowerCase();
-    const isDuplicate = await db.existCategoryByName(converted);
+    const isDuplicate = await db.existCategoryByName(categoryName);
+    if (isDuplicate) {
+      return Promise.reject(`Category name ${duplicateErr}`);
+    }
+  });
+
+const validateUpdateCategory = body("categoryName")
+  .trim()
+  .matches(/^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$/gm)
+  .withMessage(`Category ${nameFormatErr}`)
+  .isLength({ min: 1, max: 10 })
+  .withMessage(`Category ${nameLengthErr}`)
+  .custom(async (categoryName, { req }) => {
+    const categoryId = req.params!.categoryId;
+    const isDuplicate = await db.existCategoryByNameNotId(
+      categoryName,
+      categoryId,
+    );
     if (isDuplicate) {
       return Promise.reject(`Category name ${duplicateErr}`);
     }
@@ -37,13 +47,12 @@ const validateProduct = [
       const { name } = await db.getProductById(productId);
       return newName !== name ? Promise.resolve(true) : Promise.reject(false);
     })
-    .matches(/^[a-zA-Z0-9]+(\s[a-zA-Z0-9]+)*$/gm)
+    .matches(/^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$/gm)
     .withMessage(`Product ${nameFormatErr}`)
     .isLength({ min: 1, max: 10 })
     .withMessage(`Product ${nameLengthErr}`)
     .custom(async (productName) => {
-      const converted = jsConvert.toSnakeCase(productName).toLowerCase();
-      const isDuplicate = await db.existProductByName(converted);
+      const isDuplicate = await db.existProductByName(productName);
       if (isDuplicate) {
         return Promise.reject(`Product ${duplicateErr}`);
       }
@@ -54,4 +63,4 @@ const validateProduct = [
   body("options"),
 ];
 
-export = { validateCategory, validateProduct };
+export = { validateNewCategory, validateUpdateCategory, validateProduct };
