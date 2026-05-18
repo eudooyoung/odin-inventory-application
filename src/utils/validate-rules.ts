@@ -38,15 +38,10 @@ const validateUpdateCategory = body("categoryName")
     }
   });
 
-const validateProduct = [
+const validateNewProduct = [
   body("categoryId"),
   body("productName")
     .trim()
-    .if(async (newName, { req }) => {
-      const productId = req.params!.productId;
-      const { name } = await db.getProductById(productId);
-      return newName !== name ? Promise.resolve(true) : Promise.reject(false);
-    })
     .matches(/^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$/gm)
     .withMessage(`Product ${nameFormatErr}`)
     .isLength({ min: 1, max: 10 })
@@ -63,4 +58,33 @@ const validateProduct = [
   body("options"),
 ];
 
-export = { validateNewCategory, validateUpdateCategory, validateProduct };
+const validateUpdateProduct = [
+  body("categoryId"),
+  body("productName")
+    .trim()
+    .matches(/^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$/gm)
+    .withMessage(`Product ${nameFormatErr}`)
+    .isLength({ min: 1, max: 10 })
+    .withMessage(`Product ${nameLengthErr}`)
+    .custom(async (productName, { req }) => {
+      const productId = req.params!.productId;
+      const isDuplicate = await db.existProductByNameNotId(
+        productName,
+        productId,
+      );
+      if (isDuplicate) {
+        return Promise.reject(`Product ${duplicateErr}`);
+      }
+    }),
+  body("productPrice")
+    .isInt({ min: 0 })
+    .withMessage(`Product price ${priceErr}`),
+  body("options"),
+];
+
+export = {
+  validateNewCategory,
+  validateUpdateCategory,
+  validateNewProduct,
+  validateUpdateProduct,
+};

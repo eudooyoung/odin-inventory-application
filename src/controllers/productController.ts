@@ -39,7 +39,7 @@ const newProductPostMiddleware: types.Middleware = async (req, res) => {
   res.redirect("/product");
 };
 
-const newProductPost = [...vr.validateProduct, newProductPostMiddleware];
+const newProductPost = [...vr.validateNewProduct, newProductPostMiddleware];
 
 const productDetailGet: types.Middleware = async (req, res) => {
   const products = await db.getAllProducts();
@@ -98,7 +98,6 @@ const updateProductMiddleware: types.Middleware = async (req, res) => {
       options: options,
       productOptionIds: productOptionIds,
       productErrors: errors.array(),
-      prev: cc.prevBodyCaseConverter(req.body),
     });
   }
   const data = v.matchedData(req);
@@ -107,7 +106,16 @@ const updateProductMiddleware: types.Middleware = async (req, res) => {
   res.redirect(`/product/${productId}`);
 };
 
-const updateProductPost = [...vr.validateProduct, updateProductMiddleware];
+const updateProductPost = [
+  ...vr.validateUpdateProduct,
+  updateProductMiddleware,
+];
+
+const deleteProductPost: types.Middleware = async (req, res) => {
+  const productId = Number(req.params.productId);
+  await db.deleteProductById(productId);
+  res.redirect("/product");
+};
 
 export = {
   productGet,
@@ -115,4 +123,5 @@ export = {
   productDetailGet,
   updateProductGet,
   updateProductPost,
+  deleteProductPost,
 };

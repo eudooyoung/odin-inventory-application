@@ -8,5 +8,6 @@ productRouter.post("/new", pc.newProductPost);
 productRouter.get("/:productId", pc.productDetailGet);
 productRouter.get("/:productId/update", pc.updateProductGet);
 productRouter.post("/:productId/update", pc.updateProductPost);
+productRouter.post("/:productId/delete", pc.deleteProductPost);
 
 export = productRouter;

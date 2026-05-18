@@ -73,7 +73,7 @@ const existCategoryByNameNotId = async (
   const { rows } = await pool.query(
     `select name 
        from category
-      where name = $1 and category_id not $2`,
+      where name = $1 and category_id <> $2`,
     [categoryName, categoryId],
   );
   return rows.length > 0;
@@ -172,6 +172,19 @@ const getOptionsByProductId = async (productId: number) => {
   return cc.rowsNameConverter(rows);
 };
 
+const existProductByNameNotId = async (
+  productName: string,
+  productId: number,
+) => {
+  const { rows } = await pool.query(
+    `select name 
+       from product
+      where name = $1 and product_id <> $2`,
+    [productName, productId],
+  );
+  return rows.length > 0;
+};
+
 const updateProductById = async (
   { categoryId, productName, productPrice, options }: types.ProductInput,
   productId: number,
@@ -186,14 +199,24 @@ const updateProductById = async (
     [categoryId, productName, productPrice, productId],
   );
 
-  await deleteProductOptionByProductId(productId);
+  await deleteProductOptionsByProductId(productId);
   await insertProductOption(productId, options);
 };
 
-const deleteProductOptionByProductId = async (productId: number) => {
+const deleteProductOptionsByProductId = async (productId: number) => {
   await pool.query(
     `
     delete from product_option
+     where product_id = $1
+    `,
+    [productId],
+  );
+};
+
+const deleteProductById = async (productId: number) => {
+  await pool.query(
+    `
+    delete from product
      where product_id = $1
     `,
     [productId],
@@ -215,6 +238,8 @@ export = {
   existProductByName,
   insertProduct,
   getProductWithCategoryNameByProductId,
+  existProductByNameNotId,
   getOptionsByProductId,
   updateProductById,
+  deleteProductById,
 };
