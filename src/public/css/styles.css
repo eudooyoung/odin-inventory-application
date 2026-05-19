@@ -51,6 +51,7 @@ a:visited {
 }
 
 p > label,
+legend,
 span {
   font-weight: bold;
 }
@@ -74,6 +75,7 @@ button {
   padding: var(--button-padding);
 }
 
+/* category pages */
 main.add.category {
   display: grid;
   grid-template-rows: var(--main-rows-divided-2);
@@ -134,7 +136,7 @@ main.update.category {
   align-items: center;
 }
 
-.update form {
+.update.category form {
   align-self: self-start;
 
   display: grid;
@@ -148,6 +150,7 @@ main.update.category {
   gap: var(--buttons-gap);
 }
 
+/* product pages */
 body > .sub-header.product ul {
   max-height: 6rem;
 
@@ -212,11 +215,14 @@ main.add .form-wrapper {
 
 .add.product .input.options {
   grid-area: options;
+}
+
+.options {
   padding: 1rem;
   overflow-y: scroll;
 }
 
-.input.options > ul {
+.options > ul {
   max-height: 12rem;
 
   display: flex;
@@ -226,7 +232,7 @@ main.add .form-wrapper {
   flex-wrap: wrap;
 }
 
-.input.options li {
+.options li {
   max-width: 20%;
   overflow-x: hidden;
 }
@@ -244,6 +250,22 @@ main.detail.product {
 
 .detail.product .information {
   align-self: self-start;
+  display: grid;
+  grid-template-rows: var(--main-rows-divided-7);
+  align-items: center;
+}
+
+main.update.product {
+  display: grid;
+  grid-template-rows: 3rem auto 3rem;
+  align-items: center;
+  align-content: start;
+}
+
+main.update form {
+  align-self: self-start;
+  max-width: 70rem;
+
   display: grid;
   grid-template-rows: var(--main-rows-divided-7);
   align-items: center;

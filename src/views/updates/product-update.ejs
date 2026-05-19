@@ -1,11 +1,12 @@
-<main>
+<main class="update product">
   <h2>Product edit</h2>
-  <%- include("../errors/product-errors") %>
-  <form class="product update" action="/product/<%= product.productId %>/update" method="post">
-    <a style="text-decoration: none" href="/product/<%= product.productId %>">
-      <button type="button">Cancel</button>
-    </a>
-    <button type="submit">Save</button>
+  <form action="/product/<%= product.productId %>/update" method="post">
+    <div class="buttons">
+      <a href="/product/<%= product.productId %>">
+        <button type="button">Cancel</button>
+      </a>
+      <button type="submit">Save</button>
+    </div>
     <p>
       <label for="product-name">Product name:</label>
       <input type="text" name="product-name" id="product-name" value="<%= product.name %>" autofocus required />
@@ -18,8 +19,8 @@
       <label for="product-price">Price:</label>
       <input type="number" name="product-price" id="product-price" value="<%= product.price %>">
     </p>
-    <div class="category">
-      <label style="font-weight:bold" for="category-id">Category:</label>
+    <p>
+      <label for="category-id">Category:</label>
       <select name="category-id" id="category-id" required>
         <option value="">Choose a category</option>
         <% categories.forEach(category => { %>
@@ -44,6 +45,6 @@
         <% }) %>
       </ul>
     </fieldset>
-
   </form>
+  <%- include("../errors/product-errors") %>
 </main>
