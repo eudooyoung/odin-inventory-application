@@ -3,6 +3,11 @@ import pc = require("../controllers/productController");
 
 const productRouter = ex.Router();
 
+productRouter.use((req, res, next) => {
+  res.locals.route = { page: "product" };
+  next();
+});
+
 productRouter.get("/", pc.productGet);
 productRouter.post("/new", pc.newProductPost);
 productRouter.get("/:productId", pc.productDetailGet);

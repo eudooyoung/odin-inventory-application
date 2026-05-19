@@ -5,6 +5,11 @@ const cc = categoryController;
 
 const categoryRouter = Router();
 
+categoryRouter.use((req, res, next) => {
+  res.locals.route = { page: "category" };
+  next();
+});
+
 categoryRouter.get("/", cc.categoryGet);
 categoryRouter.post("/new", cc.newCategoryPost);
 categoryRouter.get("/:categoryId", cc.categoryDetailGet);

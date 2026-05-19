@@ -5,6 +5,7 @@ import categoryRouter = require("./routes/categoryRouter");
 import productRouter = require("./routes/productRouter");
 import converter = require("./utils/case-converter");
 import optionRouter = require("./routes/optionRouter");
+import linkMiddleWare = require("./utils/links");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -14,6 +15,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(converter.caseConverterMiddleware);
+app.use(linkMiddleWare);
 
 app.use("/", router);
 app.use("/category", categoryRouter);

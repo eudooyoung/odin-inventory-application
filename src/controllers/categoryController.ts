@@ -1,14 +1,12 @@
 import type types = require("../utils/types");
 import db = require("../db/queries");
-import links = require("../utils/links");
 import vr = require("../utils/validate-rules");
 import v = require("express-validator");
 import converter = require("../utils/case-converter");
 
 const categoryGet: types.Middleware = async (req, res) => {
   const categories = await db.getAllCategories();
-  res.render("category", {
-    links: links,
+  res.render("index", {
     categories: categories,
   });
 };
@@ -18,8 +16,7 @@ const newCategoryPostMiddleware: types.Middleware = async (req, res) => {
   if (!errors.isEmpty()) {
     const categories = await db.getAllCategories();
     const products = await db.getAllProducts();
-    return res.status(400).render("category", {
-      links: links,
+    return res.status(400).render("index", {
       categories: categories,
       products: products,
       categoryErrors: errors.array(),
@@ -38,9 +35,8 @@ const categoryDetailGet: types.Middleware = async (req, res) => {
   const categoryId = Number(req.params.categoryId);
   const category = await db.getCategoryById(categoryId);
   const products = await db.getProductsByCategoryId(categoryId);
-  res.render("category", {
-    route: "detail",
-    links: links,
+  res.render("index", {
+    route: { ...res.locals.route, to: "detail" },
     categories: categories,
     category: category,
     products: products,
@@ -52,9 +48,8 @@ const updateCategoryGet: types.Middleware = async (req, res) => {
   const categoryId = Number(req.params.categoryId);
   const category = await db.getCategoryById(categoryId);
   const products = await db.getProductsByCategoryId(categoryId);
-  res.render("category", {
-    route: "update",
-    links: links,
+  res.render("index", {
+    route: { ...res.locals.route, to: "update" },
     categories: categories,
     category: category,
     products: products,
@@ -68,9 +63,8 @@ const updateCategoryPostMiddleware: types.Middleware = async (req, res) => {
     const categories = await db.getAllCategories();
     const category = await db.getCategoryById(categoryId);
     const products = await db.getProductsByCategoryId(categoryId);
-    return res.status(400).render("category", {
-      route: "update",
-      links: links,
+    return res.status(400).render("index", {
+      route: { ...res.locals.route, to: "update" },
       categories: categories,
       category: category,
       products: products,

@@ -1,0 +1,11 @@
+  <aside class="sidebar">
+    <% if (locals.route.page === "home" || locals.route.page === "category") { %>
+     <%- include("category-sidebar") %>
+    <% } %>
+     <% if (locals.route.page === "home" || locals.route.page === "product") { %>
+     <%- include("product-sidebar") %>
+    <% } %>
+     <% if (locals.route.page === "home" || locals.route.page === "option") { %>
+     <%- include("option-sidebar") %>
+    <% } %>
+  </aside>

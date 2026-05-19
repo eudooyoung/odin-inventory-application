@@ -3,6 +3,11 @@ import oc = require("../controllers/optionController");
 
 const optionRouter = ex.Router();
 
+optionRouter.use((req, res, next) => {
+  res.locals.route = { page: "option" };
+  next();
+});
+
 optionRouter.get("/", oc.optionGet);
 optionRouter.post("/new", oc.newOptionPost);
 optionRouter.get("/:optionId", oc.optionDetailGet);

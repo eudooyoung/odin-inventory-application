@@ -1,3 +1,5 @@
+import type types = require("./types");
+
 const links = [
   { href: "/", text: "Home" },
   { href: "/category", text: "Categories" },
@@ -5,4 +7,9 @@ const links = [
   { href: "/option", text: "Options" },
 ];
 
-export = links;
+const linkMiddleWare: types.Middleware = (req, res, next) => {
+  res.locals.links = links;
+  next!();
+}
+
+export = linkMiddleWare;

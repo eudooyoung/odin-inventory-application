@@ -1,6 +1,5 @@
 import type types = require("../utils/types");
 import db = require("../db/queries");
-import links = require("../utils/links");
 import vr = require("../utils/validate-rules");
 import v = require("express-validator");
 import jsConvert = require("js-convert-case");
@@ -10,8 +9,7 @@ const productGet: types.Middleware = async (req, res) => {
   const categories = await db.getAllCategories();
   const products = await db.getAllProducts();
   const options = await db.getAllOptions();
-  res.render("product", {
-    links: links,
+  res.render("index", {
     products: products,
     categories: categories,
     options: options,
@@ -25,7 +23,6 @@ const newProductPostMiddleware: types.Middleware = async (req, res) => {
     const products = await db.getAllProducts();
     const options = await db.getAllOptions();
     return res.status(400).render("product", {
-      links: links,
       products: products,
       categories: categories,
       options: options,
@@ -51,8 +48,7 @@ const productDetailGet: types.Middleware = async (req, res) => {
     await db.getProductWithCategoryNameByProductId(productId);
   const options = await db.getOptionsByProductId(productId);
   res.render("product", {
-    route: "detail",
-    links: links,
+    route: { ...res.locals.route, to: "detail" },
     products: products,
     productWithCategoryName: jsConvert.camelKeys(productWithCategoryName),
     options: options,
@@ -70,8 +66,7 @@ const updateProductGet: types.Middleware = async (req, res) => {
     (option: { optionId: string }) => option.optionId,
   );
   res.render("product", {
-    route: "update",
-    links: links,
+    route: { ...res.locals.route, to: "update" },
     products: products,
     product: product,
     categories: categories,
@@ -93,8 +88,7 @@ const updateProductMiddleware: types.Middleware = async (req, res) => {
       (option: { optionId: string }) => option.optionId,
     );
     return res.status(400).render("product", {
-      route: "update",
-      links: links,
+      route: { ...res.locals.route, to: "update" },
       products: products,
       product: product,
       categories: categories,

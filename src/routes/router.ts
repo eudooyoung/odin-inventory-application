@@ -1,6 +1,6 @@
 import express = require("express");
 import controller = require("../controllers/controller");
-const { homeGet, newGet,  newProductPost } =
+const { homeGet } =
   controller;
 const { Router } = express;
 

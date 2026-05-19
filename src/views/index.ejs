@@ -5,53 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fabric Shop</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="/css/styles.css" />
 </head>
 
 <body>
   <%- include("headers/header") %>
-  <section class="sub-header">
-    <h2>Home</h2>
-    <p>Fabric Shop Inventory Managing Systeam</p>
-  </section>
-  <main class="home">
-    <section>
-      <h3>Categories</h3>
-      <% if (locals.categories) { %>
-      <ul>
-        <% categories.forEach(category => { %>
-        <li>
-          <a href="/category/<%= category.categoryId %>"><%= category.name %></a>
-        </li>
-        <% }) %>
-      </ul>
-      <% } %>
-    </section>
-    <section>
-      <h3>Products</h3>
-      <% if (locals.products) { %>
-      <ul>
-        <% products.forEach(product => { %>
-        <li>
-          <a href="/product/<%= product.productId %>"><%= product.name %></a>
-        </li>
-        <% }) %>
-      </ul>
-      <% } %>
-    </section>
-    <section>
-      <h3>Options</h3>
-      <% if (locals.options) { %>
-      <ul>
-        <% options.forEach(option => { %>
-        <li>
-          <a href="/option/<%= option.optionId %>"><%= option.name %></a>
-        </li>
-        <% }) %>
-      </ul>
-      <% } %>
-    </section>
-  </main>
+  <%- include("sidebars/sidebar") %>
+  <%- include("mains/main") %>
 </body>
 
 </html>

@@ -1,0 +1,9 @@
+ <% if (!locals.route.to) { %>
+ <%- include("adds/category-add") %>
+ <% } %>
+ <% if (locals.route.to === "detail") { %>
+ <%- include("details/category-detail") %>
+ <% } %>
+ <% if (locals.route.to === "update") { %>
+ <%- include("updates/category-update") %>
+ <% } %>
