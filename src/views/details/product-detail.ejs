@@ -1,37 +1,41 @@
-<main>
+<main class="detail product">
   <h2>Product detail</h2>
-  <form style="display: contents" action="/product/<%= productWithCategoryName.productId %>/delete" method="post">
-    <button type="submit" style="background: red; color: #fff" onclick="return confirm('Are you sure?');">
-      Delete
-    </button>
-  </form>
-  <a style="text-decoration: none" href="/product/<%= productWithCategoryName.productId %>/update">
-    <button>Edit</button>
-  </a>
-  <p>
-    <span style="font-weight: bold">Product name:</span>
-    <%= productWithCategoryName.name %>
-  </p>
-  <p>
-    <span style="font-weight: bold">Product ID:</span>
-    <%= productWithCategoryName.productId %>
-  </p>
-  <p>
-    <span style="font-weight: bold">Price:</span>
-    <%= productWithCategoryName.price %>
-  </p>
-  <p>
-    <span style="font-weight: bold">Category:</span>
-    <%= productWithCategoryName.categoryName %>
-  </p>
-  <p>
-    <span style="font-weight: bold">Added at:</span>
-    <%= productWithCategoryName.createdAt %>
-  </p>
-  <p><span style="font-weight: bold">Options</span></p>
-  <ul>
-    <% options.forEach(option => { %>
-    <li><%= option.name %>, price: <%= option.price %></li>
-    <% }) %>
-  </ul>
+  <div class="buttons">
+    <form action="/product/<%= productWithCategoryName.productId %>/delete" method="post">
+      <button type="submit" style="background: red; color: #fff" onclick="return confirm('Are you sure?');">
+        Delete
+      </button>
+    </form>
+    <a href="/product/<%= productWithCategoryName.productId %>/update">
+      <button>Edit</button>
+    </a>
+  </div>
+  <div class="information">
+    <p>
+      <span>Product name:</span>
+      <%= productWithCategoryName.name %>
+    </p>
+    <p>
+      <span>Product ID:</span>
+      <%= productWithCategoryName.productId %>
+    </p>
+    <p>
+      <span>Price:</span>
+      <%= productWithCategoryName.price %>
+    </p>
+    <p>
+      <span>Category:</span>
+      <%= productWithCategoryName.categoryName %>
+    </p>
+    <p>
+      <span>Added at:</span>
+      <%= productWithCategoryName.createdAt %>
+    </p>
+    <p><span>Options</span></p>
+    <ul>
+      <% options.forEach(option => { %>
+      <li><%= option.name %>, price: <%= option.price %></li>
+      <% }) %>
+    </ul>
+  </div>
 </main>

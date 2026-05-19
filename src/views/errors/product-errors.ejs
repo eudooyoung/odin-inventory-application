@@ -1,5 +1,5 @@
 <% if (locals.productErrors) { %>
-<ul>
+<ul class="error product">
   <% productErrors.forEach(error => { %>
   <li><%= error.msg %></li>
   <% }) %>

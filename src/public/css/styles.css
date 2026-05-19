@@ -11,7 +11,8 @@
   --sub-header-list-margin: 0 1rem;
   --main-rows-divided-2: 6rem auto;
   --main-rows-divided-3: 3rem 3rem auto;
-  --main-rows-divided-5: repeat(4, 2.5rem) auto;
+  --main-rows-divided-5: repeat(4, 3rem) auto;
+  --main-rows-divided-6: repeat(5, 3rem) auto;
   --main-rows-divided-7: repeat(6, 3rem) auto;
   --main-list-margin: 0.5rem 1rem;
   --color: #3f3f3f;
@@ -56,6 +57,7 @@ span {
 
 .error {
   color: var(--error-color);
+  list-style-type: none;
 }
 
 header {
@@ -79,16 +81,29 @@ main.add.category {
 
 .add .guide {
   display: grid;
+  align-items: center;
 }
 
 .add.category .form-wrapper {
   display: grid;
   grid-template-rows: var(--main-rows-divided-3);
+  align-items: center;
 }
 
-main.category.detail {
+.add.category form {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.add.category .form-wrapper .error {
+  align-self: self-start;
+}
+
+main.detail.category {
   display: grid;
   grid-template-rows: var(--main-rows-divided-3);
+  align-items: center;
 }
 
 .detail .buttons {
@@ -100,23 +115,31 @@ button.delete {
   background-color: var(--delete-button-background);
 }
 
-.detail .information {
+.detail.category .information {
+  align-self: self-start;
+
   display: grid;
   grid-template-rows: var(--main-rows-divided-5);
+  align-items: center;
 }
 
-.information ul, .update ul {
+.information ul,
+.update ul {
   margin: 0 2rem;
 }
 
 main.update.category {
   display: grid;
-  grid-template-rows: var(--main-rows-divided-3);
+  grid-template-rows: 3rem 20rem 3rem;
+  align-items: center;
 }
 
 .update form {
+  align-self: self-start;
+
   display: grid;
-  grid-template-rows: var(--main-rows-divided-7);
+  grid-template-rows: var(--main-rows-divided-6);
+  align-items: center;
 }
 
 .update .buttons {
@@ -136,7 +159,7 @@ body > .sub-header.product ul {
 }
 
 body > .sub-header li {
-  max-width: 30%
+  max-width: 30%;
 }
 
 main.add.product {
@@ -144,23 +167,24 @@ main.add.product {
   grid-template-rows: var(--main-rows-divided-2);
 }
 
-.add.product .form-wrapper {
+main.add .form-wrapper {
   display: grid;
   grid-template-rows: 3rem auto;
+  align-items: center;
 }
 
 .add.product form {
+  align-self: self-start;
   max-width: 70rem;
   max-height: 20rem;
 
   display: grid;
   grid-template-areas:
-    "category product-name product-price .."
-    "options options options options"
-    "button button button button";
+    "category product-name product-price button"
+    "options options options options";
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 5rem auto 3rem;
-  column-gap: 3rem;
+  grid-template-rows: 3rem auto 3rem;
+  column-gap: 2rem;
   row-gap: 1rem;
   align-items: center;
 }
@@ -194,17 +218,33 @@ main.add.product {
 
 .input.options > ul {
   max-height: 12rem;
+
   display: flex;
   flex-direction: column;
+  row-gap: 0.5rem;
   column-gap: 2rem;
   flex-wrap: wrap;
 }
 
-.input.options > li {
-  max-width: 30%;
+.input.options li {
+  max-width: 20%;
+  overflow-x: hidden;
 }
 
 .add.product button {
   grid-area: button;
   justify-self: center;
+}
+
+main.detail.product {
+  display: grid;
+  grid-template-rows: var(--main-rows-divided-3);
+  align-items: center;
+}
+
+.detail.product .information {
+  align-self: self-start;
+  display: grid;
+  grid-template-rows: var(--main-rows-divided-7);
+  align-items: center;
 }

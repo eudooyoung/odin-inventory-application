@@ -7,7 +7,6 @@
       </a>
       <button type="submit">Save</button>
     </div>
-    <%- include('../errors/category-errors') %>
     <p>
       <label for="category-name">Category name:</label>
       <input type="text" name="category-name" id="category-name" value="<%= locals.prev ? prev.categoryName : category.name %>" autofocus required />
@@ -27,4 +26,5 @@
       <% }) %>
     </ul>
   </form>
+  <%- include('../errors/category-errors') %>
 </main>
