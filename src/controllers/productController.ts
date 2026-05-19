@@ -22,7 +22,7 @@ const newProductPostMiddleware: types.Middleware = async (req, res) => {
     const categories = await db.getAllCategories();
     const products = await db.getAllProducts();
     const options = await db.getAllOptions();
-    return res.status(400).render("product", {
+    return res.status(400).render("index", {
       products: products,
       categories: categories,
       options: options,
@@ -47,7 +47,7 @@ const productDetailGet: types.Middleware = async (req, res) => {
   const productWithCategoryName =
     await db.getProductWithCategoryNameByProductId(productId);
   const options = await db.getOptionsByProductId(productId);
-  res.render("product", {
+  res.render("index", {
     route: { ...res.locals.route, to: "detail" },
     products: products,
     productWithCategoryName: jsConvert.camelKeys(productWithCategoryName),
@@ -65,7 +65,7 @@ const updateProductGet: types.Middleware = async (req, res) => {
   const productOptionIds = productOptions.map(
     (option: { optionId: string }) => option.optionId,
   );
-  res.render("product", {
+  res.render("index", {
     route: { ...res.locals.route, to: "update" },
     products: products,
     product: product,
@@ -87,7 +87,7 @@ const updateProductMiddleware: types.Middleware = async (req, res) => {
     const productOptionIds = productOptions.map(
       (option: { optionId: string }) => option.optionId,
     );
-    return res.status(400).render("product", {
+    return res.status(400).render("index", {
       route: { ...res.locals.route, to: "update" },
       products: products,
       product: product,

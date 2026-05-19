@@ -5,13 +5,11 @@
   </section>
   <section class="form-wrapper">
     <h3>New Category</h3>
-    <div>
-      <form action="/category/new" method="post">
-        <label for="category-name">Name: </label>
-        <input type="text" name="category-name" id="category-name" value="<%= locals.prev && prev.categoryName %>" required />
-        <button type="submit">Create</button>
-      </form>
-    </div>
+    <form action="/category/new" method="post">
+      <label for="category-name">Name: </label>
+      <input type="text" name="category-name" id="category-name" value="<%= locals.prev && prev.categoryName %>" required />
+      <button type="submit">Create</button>
+    </form>
   </section>
   <%- include("../errors/category-errors") %>
 </main>

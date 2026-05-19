@@ -1,7 +1,6 @@
 import express = require("express");
 import controller = require("../controllers/controller");
-const { homeGet } =
-  controller;
+const { homeGet } = controller;
 const { Router } = express;
 
 const router = Router();

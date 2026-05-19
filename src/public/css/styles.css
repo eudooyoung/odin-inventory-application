@@ -8,22 +8,31 @@
 }
 
 :root {
-  --sub-header-rows: 3rem auto;
-  --sub-header-list-margin: 0 1rem;
+  --header-text-color: #1f1f1f;
+  --header-background-color: #959500;
+  --header-padding-level-1: 0 2rem;
+  --header-padding-level-2: 0 1rem;
+
+  --sidebar-background-color: #fff8dc;
+  --sidebar-text-color: #6f6f6f;
+  --sidebar-scrollbar-color: #efe8ac;
+  --sidebar-scrollbar-color-hovered: #cfc88c;
+  --sidebar-scrollbar-width: 1.3rem;
+  --sidebar-padding-level-1: 2rem;
+  --sidebar-padding-level-2: 0.5rem 1.5rem;
+
   --main-rows-divided-3: 3rem 3rem auto;
   --main-rows-divided-3-sand: 3rem auto 3rem;
-  --main-rows-divided-3-sand-wide: 6rem auto 3rem;
+  --main-rows-divided-3-sand-wide: 6rem auto 6rem;
   --main-rows-divided-5: repeat(4, 3rem) auto;
   --main-rows-divided-5-narrow: repeat(5, 3rem);
   --main-rows-divided-6: repeat(5, 3rem) auto;
   --main-rows-divided-6-narrow: repeat(6, 3rem);
   --main-rows-divided-7: repeat(6, 3rem) auto;
-  --main-list-margin: 0.5rem 1rem;
-  --header-text-color: #1f1f1f;
-  --header-background-color: #959500;
-  --sidebar-background-color: #fff8dc;
-  --sidebar-text-color: #6f6f6f;
-  --sidebar-scrollbar-color: saddlebrown;
+  --main-padding-level-1: 2rem;
+  --main-padding-level-2: 0 1rem;
+  --main-padding-level-3: 0 2rem;
+
   --link-color: forestgreen;
   --error-color: brown;
   --buttons-gap: 1rem;
@@ -39,6 +48,10 @@ button {
   padding: var(--button-padding);
 }
 
+button.delete {
+  background-color: var(--delete-button-background);
+}
+
 body {
   max-width: calc(1980px * 0.8);
   min-height: 100dvh;
@@ -49,12 +62,12 @@ body {
     "header header"
     "sidebar main";
   grid-template-rows: 10rem calc(100dvh - 10rem);
-  grid-template-columns: max-content auto;
+  grid-template-columns: 18rem auto;
 }
 
 header {
   grid-area: header;
-  padding: 0 2rem;
+  padding: var(--header-padding-level-1);
   background-color: var(--header-background-color);
   color: var(--header-text-color);
 
@@ -64,30 +77,48 @@ header {
 }
 
 header nav {
-  padding: 0 1rem;
+  padding: var(--header-padding-level-2);
 }
 
 aside {
   grid-area: sidebar;
-  padding: 2rem;
+  padding: var(--sidebar-padding-level-1);
   background-color: var(--sidebar-background-color);
   color: var(--sidebar-text-color);
 
   overflow-y: scroll;
-  scrollbar-color: var(--sidebar-scrollbar-color) var(--sidebar-background-color);
 
   display: grid;
-  align-items: center;
   row-gap: 0.5rem;
 }
 
+aside::-webkit-scrollbar {
+  background: var(--sidebar-background-color);
+  width: var(--sidebar-scrollbar-width);
+}
+
+aside::-webkit-scrollbar-thumb {
+  background: var(--sidebar-scrollbar-color);
+  border-radius: 1rem;
+  border: 0.35rem solid var(--sidebar-background-color);
+}
+
+aside::-webkit-scrollbar-thumb:hover {
+  background: var(--sidebar-scrollbar-color-hovered);
+}
+
+aside::-webkit-scrollbar-button {
+  height: 0.2rem;
+  background: var(--sidebar-background-color);
+}
+
 aside ul {
-  padding: 0.5rem 1.5rem;
+  padding: var(--sidebar-padding-level-2);
   list-style-type: circle;
 
   display: flex;
   flex-direction: column;
-  row-gap: 0.1rem;
+  row-gap: 0.2rem;
 }
 
 aside a {
@@ -100,7 +131,7 @@ aside a:hover {
 
 main {
   grid-area: main;
-  padding: 2rem;
+  padding: var(--main-padding-level-1);
   background-color: var(--main-background-color);
   color: var(--main-text-color);
 }
@@ -114,14 +145,16 @@ main {
 /* home */
 main.home {
   display: grid;
-  grid-template-rows: 3rem auto;
+  grid-template-rows: 3rem 3rem;
+  align-items: center;
 }
 
 main.home p {
-  padding: 0 1rem;
+  padding: var(--main-padding-level-2);
 }
 
 /* category pages */
+/* category add */
 main.add.category {
   display: grid;
   grid-template-rows: var(--main-rows-divided-3-sand-wide);
@@ -133,35 +166,39 @@ main.add.category {
   align-items: center;
 }
 
+.guide p {
+  padding: var(--main-padding-level-2);
+}
+
 .add.category .form-wrapper {
   display: grid;
-  grid-template-rows: var(--main-rows-divided-3);
+  grid-template-rows: 3rem 3rem;
   align-items: center;
 }
 
 .add.category form {
+  padding: var(--main-padding-level-2);
+
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.add.category .form-wrapper .error {
-  align-self: self-start;
-}
-
+/* category detail */
 main.detail.category {
   display: grid;
   grid-template-rows: var(--main-rows-divided-3);
   align-items: center;
 }
 
+.detail.category .buttons,
+.detail.category .information {
+  padding: var(--main-padding-level-2);
+}
+
 .detail .buttons {
   display: flex;
   gap: var(--buttons-gap);
-}
-
-button.delete {
-  background-color: var(--delete-button-background);
 }
 
 .detail.category .information {
@@ -172,11 +209,15 @@ button.delete {
   align-items: center;
 }
 
-.information ul,
-.update ul {
-  margin: 0 2rem;
+.detail.category .information span {
+  font-weight: bold;
 }
 
+.detail.category .information ul {
+  padding: var(--main-padding-level-3);
+}
+
+/* cateogry update */
 main.update.category {
   display: grid;
   grid-template-rows: 3rem 20rem 3rem;
@@ -185,36 +226,32 @@ main.update.category {
 
 .update.category form {
   align-self: self-start;
+  padding: var(--main-padding-level-2);
 
   display: grid;
   grid-template-rows: var(--main-rows-divided-6);
   align-items: center;
 }
 
-.update .buttons {
+.update.category label,
+.update.category span {
+  font-weight: bold;
+}
+
+.update.category .buttons {
   display: flex;
-  align-items: flex-start;
   gap: var(--buttons-gap);
 }
 
+.update.category form ul {
+  padding: var(--main-padding-level-3);
+}
+
 /* product pages */
-body > .sub-header ul {
-  max-height: 6rem;
-
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  column-gap: 3rem;
-}
-
-body > .sub-header li {
-  max-width: 30%;
-}
-
+/* product add */
 main.add.product {
   display: grid;
-  grid-template-rows: var(--main-rows-divided-3-sand-wide);
+  grid-template-rows: 6rem 22rem 6rem;
 }
 
 main.add .form-wrapper {
@@ -227,6 +264,7 @@ main.add .form-wrapper {
   align-self: self-start;
   max-width: 70rem;
   max-height: 20rem;
+  padding: var(--main-padding-level-2);
 
   display: grid;
   grid-template-areas:
@@ -264,12 +302,12 @@ main.add .form-wrapper {
   grid-area: options;
 }
 
-.options {
+.add.product .options {
   padding: 1rem;
   overflow-y: scroll;
 }
 
-.options > ul {
+.add.product .options > ul {
   max-height: 12rem;
 
   display: flex;
@@ -279,7 +317,7 @@ main.add .form-wrapper {
   flex-wrap: wrap;
 }
 
-.options li {
+.add.product .options li {
   max-width: 20%;
   overflow-x: hidden;
 }
@@ -295,6 +333,12 @@ main.detail.product {
   align-items: center;
 }
 
+/* product detail */
+main.detail.product .buttons,
+main.detail.product .information {
+  padding: var(--main-padding-level-2);
+}
+
 .detail.product .information {
   align-self: self-start;
   display: grid;
@@ -302,6 +346,15 @@ main.detail.product {
   align-items: center;
 }
 
+.detail.product span {
+  font-weight: bold;
+}
+
+.detail.product ul {
+  padding: var(--main-padding-level-3);
+}
+
+/* product update */
 main.update.product {
   display: grid;
   grid-template-rows: 3rem auto 3rem;
