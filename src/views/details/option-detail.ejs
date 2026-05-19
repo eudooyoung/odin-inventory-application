@@ -1,26 +1,28 @@
-<main>
+<main class="detail option">
   <h2>Option detail</h2>
-  <form style="display: contents" action="/option/<%= option.optionId %>/delete" method="post">
-    <button type="submit" style="background: red; color: #fff" onclick="return confirm('Are you sure?');">
-      Delete
-    </button>
-  </form>
-  <a style="text-decoration: none" href="/option/<%= option.optionId %>/update">
-    <button>Edit</button>
-  </a>
+  <div class="buttons">
+    <form action="/option/<%= option.optionId %>/delete" method="post">
+      <button type="submit" style="background: red; color: #fff" onclick="return confirm('Are you sure?');">
+        Delete
+      </button>
+    </form>
+    <a href="/option/<%= option.optionId %>/update">
+      <button>Edit</button>
+    </a>
+  </div>
   <p>
-    <span >Option name:</span>
+    <span>Option name:</span>
     <%= option.name %>
   </p>
   <p>
-    <span >Option ID:</span>
+    <span>Option ID:</span>
     <%= option.optionId %>
   </p>
-  <p><span >Price</span>
+  <p><span>Price</span>
     <%= option.price %>
   </p>
   <p>
-    <span >Added at:</span>
+    <span>Added at:</span>
     <%= option.createdAt %>
   </p>
 </main>

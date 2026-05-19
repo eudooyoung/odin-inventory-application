@@ -33,3 +33,7 @@
 | -------------- | ---------: |
 | product_id     | int **FK** |
 | option_id      | int **FK** |
+
+# todo
+option add: option name validate rule extend
+option detail: product currently using this option add

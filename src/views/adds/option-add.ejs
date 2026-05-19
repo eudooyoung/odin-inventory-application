@@ -1,7 +1,9 @@
-<main>
-  <h2>Add new category</h2>
-  <p>Fill the form below to add a new category</p>
-  <section>
+<main class="add option">
+  <section class="guide">
+    <h2>Add new Option</h2>
+    <p>Fill the form below to add a new category</p>
+  </section>
+  <section class="form-wrapper">
     <h3>New Option</h3>
     <div>
       <form action="/option/new" method="post">
@@ -11,7 +13,7 @@
         <input type="number" name="option-price" id="option-price" value="<%= locals.prev && prev.optionPrice %>" required>
         <button type="submit">Create</button>
       </form>
-      <%- include("../errors/option-errors") %>
     </div>
   </section>
+  <%- include("../errors/option-errors") %>
 </main>
