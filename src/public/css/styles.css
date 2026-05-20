@@ -63,7 +63,7 @@ body {
     "header header"
     "sidebar main";
   grid-template-rows: 10rem calc(100dvh - 10rem);
-  grid-template-columns: 18rem auto;
+  grid-template-columns: 19rem auto;
 }
 
 header {
@@ -79,6 +79,25 @@ header {
 
 header nav {
   padding: var(--header-padding-level-2);
+}
+
+header ul {
+  display: flex;
+  gap: 2rem;
+  list-style-type: none;
+}
+
+header a {
+  text-decoration: none;
+}
+
+header a:hover {
+  text-decoration: underline;
+}
+
+header a.selected {
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 aside {
@@ -127,6 +146,11 @@ aside a {
 }
 
 aside a:hover {
+  text-decoration: underline;
+}
+
+aside a.selected{
+  font-weight: bold;
   text-decoration: underline;
 }
 

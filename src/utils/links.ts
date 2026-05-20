@@ -1,7 +1,7 @@
 import type types = require("./types");
 
 const links = [
-  { href: "/", text: "Home" },
+  { href: "/home", text: "Home" },
   { href: "/category", text: "Categories" },
   { href: "/product", text: "Products" },
   { href: "/option", text: "Options" },

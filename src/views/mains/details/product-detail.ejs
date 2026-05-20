@@ -2,7 +2,7 @@
   <h2>Product detail</h2>
   <div class="buttons">
     <form action="/product/<%= productWithCategoryName.productId %>/delete" method="post">
-      <button type="submit" style="background: red; color: #fff" onclick="return confirm('Are you sure?');">
+      <button class="delete" type="submit" onclick="return confirm('Are you sure?');">
         Delete
       </button>
     </form>

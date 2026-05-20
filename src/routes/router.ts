@@ -5,6 +5,6 @@ const { Router } = express;
 
 const router = Router();
 
-router.get("/", homeGet);
+router.get(["/", "/home"], homeGet);
 
 export = router;

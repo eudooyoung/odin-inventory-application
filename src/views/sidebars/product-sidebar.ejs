@@ -4,7 +4,7 @@
   <ul>
     <% products.forEach(product => { %>
     <li>
-      <a href="/product/<%= product.productId %>"><%= product.name %></a>
+      <a class="<%= locals.product?.productId === product.productId && 'selected' %>" href="/product/<%= product.productId %>"><%= product.name %></a>
     </li>
     <% }) %>
   </ul>

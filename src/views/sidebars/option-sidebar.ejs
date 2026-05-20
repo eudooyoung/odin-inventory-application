@@ -4,7 +4,7 @@
   <ul>
     <% options.forEach(option => { %>
     <li>
-      <a href="/option/<%= option.optionId %>"><%= option.name %></a>
+      <a class="<%= locals.option?.optionId === option.optionId && 'selected' %>" href="/option/<%= option.optionId %>"><%= option.name %></a>
     </li>
     <% }) %>
   </ul>
