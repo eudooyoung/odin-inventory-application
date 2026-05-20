@@ -44,13 +44,16 @@ const newProductPost = [...vr.validateNewProduct, newProductPostMiddleware];
 const productDetailGet: types.Middleware = async (req, res) => {
   const products = await db.getAllProducts();
   const productId = Number(req.params.productId);
-  const productWithCategoryName =
-    await db.getProductWithCategoryNameByProductId(productId);
+  const product = await db.getProductById(productId);
+  const { categoryName } = (await db.getCategoryNameByProductId(productId)) as {
+    categoryName: string;
+  };
   const options = await db.getOptionsByProductId(productId);
   res.render("index", {
     route: { ...res.locals.route, to: "detail" },
     products: products,
-    productWithCategoryName: jsConvert.camelKeys(productWithCategoryName),
+    product: product,
+    categoryName: categoryName,
     options: options,
   });
 };

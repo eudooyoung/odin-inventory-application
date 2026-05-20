@@ -1,35 +1,35 @@
 <main class="detail product">
   <h2>Product detail</h2>
   <div class="buttons">
-    <form action="/product/<%= productWithCategoryName.productId %>/delete" method="post">
+    <form action="/product/<%= product.productId %>/delete" method="post">
       <button class="delete" type="submit" onclick="return confirm('Are you sure?');">
         Delete
       </button>
     </form>
-    <a href="/product/<%= productWithCategoryName.productId %>/update">
+    <a href="/product/<%= product.productId %>/update">
       <button>Edit</button>
     </a>
   </div>
   <div class="information">
     <p>
       <span>Product name:</span>
-      <%= productWithCategoryName.name %>
+      <%= product.name %>
     </p>
     <p>
       <span>Product ID:</span>
-      <%= productWithCategoryName.productId %>
+      <%= product.productId %>
     </p>
     <p>
       <span>Price:</span>
-      <%= productWithCategoryName.price %>
+      <%= product.price %>
     </p>
     <p>
       <span>Category:</span>
-      <%= productWithCategoryName.categoryName %>
+      <%= categoryName %>
     </p>
     <p>
       <span>Added at:</span>
-      <%= productWithCategoryName.createdAt %>
+      <%= product.createdAt %>
     </p>
     <p><span>Options</span></p>
     <ul>

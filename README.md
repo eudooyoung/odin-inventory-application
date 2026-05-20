@@ -36,4 +36,3 @@
 
 # todo
 option add: option name validate rule extend
-option detail: product currently using this option add

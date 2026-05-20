@@ -33,6 +33,8 @@
   --main-padding-level-1: 2rem;
   --main-padding-level-2: 0 1rem;
   --main-padding-level-3: 0 2rem;
+  --main-text-color: #3f3f3f;
+  --main-background-color: #fcfcf0;
 
   --link-color: forestgreen;
   --error-color: brown;
@@ -53,19 +55,30 @@ button.delete {
   background-color: var(--delete-button-background);
 }
 
+.error {
+  color: var(--error-color);
+  list-style-type: none;
+  align-self: center;
+}
+
 body {
   max-width: calc(1980px * 0.8);
   min-height: 100dvh;
   margin: 0 auto;
+
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 
   display: grid;
   grid-template-areas:
     "header header"
     "sidebar main";
   grid-template-rows: 10rem calc(100dvh - 10rem);
-  grid-template-columns: 19rem auto;
+  grid-template-columns: 20rem auto;
 }
 
+/* header */
 header {
   grid-area: header;
   padding: var(--header-padding-level-1);
@@ -100,6 +113,7 @@ header a.selected {
   text-decoration: underline;
 }
 
+/* sidebar */
 aside {
   grid-area: sidebar;
   padding: var(--sidebar-padding-level-1);
@@ -149,11 +163,12 @@ aside a:hover {
   text-decoration: underline;
 }
 
-aside a.selected{
+aside a.selected {
   font-weight: bold;
   text-decoration: underline;
 }
 
+/* main */
 main {
   grid-area: main;
   padding: var(--main-padding-level-1);
@@ -161,12 +176,7 @@ main {
   color: var(--main-text-color);
 }
 
-.error {
-  color: var(--error-color);
-  list-style-type: none;
-  align-self: center;
-}
-
+/* pages */
 /* home */
 main.home {
   display: grid;
@@ -178,15 +188,15 @@ main.home p {
   padding: var(--main-padding-level-2);
 }
 
-/* category pages */
-/* category add */
+/* category */
+/* add */
 main.add.category {
   display: grid;
   grid-template-rows: var(--main-rows-divided-3-sand-wide);
   align-content: start;
 }
 
-.add .guide {
+.guide {
   display: grid;
   align-items: center;
 }
@@ -209,7 +219,7 @@ main.add.category {
   gap: 1rem;
 }
 
-/* category detail */
+/* detail */
 main.detail.category {
   display: grid;
   grid-template-rows: var(--main-rows-divided-3);
@@ -242,7 +252,7 @@ main.detail.category {
   padding: var(--main-padding-level-3);
 }
 
-/* category update */
+/* update */
 main.update.category {
   display: grid;
   grid-template-rows: 3rem 20rem 3rem;
@@ -273,7 +283,7 @@ main.update.category {
 }
 
 /* product pages */
-/* product add */
+/* add */
 main.add.product {
   display: grid;
   grid-template-rows: var(--main-rows-divided-3-sand-wide);

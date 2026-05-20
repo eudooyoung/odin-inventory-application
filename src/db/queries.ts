@@ -151,16 +151,16 @@ const getProductById = async (productId: number) => {
   return converter.rowsNameConverter(rows)[0];
 };
 
-const getProductWithCategoryNameByProductId = async (productId: number) => {
+const getCategoryNameByProductId = async (productId: number) => {
   const { rows } = await pool.query(
-    `select c.name category_name, p.* p_all
+    `select c.name category_name 
        from category c
        join product p
          on c.category_id = p.category_id
       where p.product_id = $1`,
     [productId],
   );
-  return converter.rowsNameConverter(rows)[0];
+  return converter.rowNameConverter(rows[0]);
 };
 
 const getOptionsByProductId = async (productId: number) => {
@@ -310,7 +310,7 @@ export = {
   getProductById,
   existProductByName,
   insertProduct,
-  getProductWithCategoryNameByProductId,
+  getCategoryNameByProductId,
   existProductByNameNotId,
   getOptionsByProductId,
   updateProductById,
