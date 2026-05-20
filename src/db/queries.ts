@@ -23,7 +23,8 @@ const getAllProducts = async () => {
 const getAllOptions = async () => {
   const { rows } = await pool.query(
     `select option_id, name
-       from option`,
+       from option
+       order by option_id`,
   );
   return converter.rowsNameConverter(rows);
 };

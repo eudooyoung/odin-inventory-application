@@ -28,7 +28,7 @@ const newCategoryPostMiddleware: types.Middleware = async (req, res) => {
   res.redirect("/category");
 };
 
-const newCategoryPost = [vr.validateNewCategory, newCategoryPostMiddleware];
+const newCategoryPost = [...vr.validateNewCategory, newCategoryPostMiddleware];
 
 const categoryDetailGet: types.Middleware = async (req, res) => {
   const categories = await db.getAllCategories();
@@ -79,7 +79,7 @@ const updateCategoryPostMiddleware: types.Middleware = async (req, res) => {
 };
 
 const updateCategoryPost = [
-  vr.validateUpdateCategory,
+  ...vr.validateUpdateCategory,
   updateCategoryPostMiddleware,
 ];
 

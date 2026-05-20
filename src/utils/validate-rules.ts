@@ -5,38 +5,43 @@ const { body } = validator;
 
 const nameFormatErr = "must only contain letters and numbers";
 const nameLengthErr = "must be between 1 and 10 characters.";
+const optionNameLengthErr = "must be between 1 and 20 characters.";
 const duplicateErr = "already in use.";
 const priceErr = "must be greater or equal to 0";
 
-const validateNewCategory = body("categoryName")
-  .trim()
-  .matches(/^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$/gm)
-  .withMessage(`Category ${nameFormatErr}`)
-  .isLength({ min: 1, max: 10 })
-  .withMessage(`Category ${nameLengthErr}`)
-  .custom(async (categoryName) => {
-    const isDuplicate = await db.existCategoryByName(categoryName);
-    if (isDuplicate) {
-      return Promise.reject(`Category name ${duplicateErr}`);
-    }
-  });
+const validateNewCategory = [
+  body("categoryName")
+    .trim()
+    .matches(/^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$/gm)
+    .withMessage(`Category ${nameFormatErr}`)
+    .isLength({ min: 1, max: 10 })
+    .withMessage(`Category ${nameLengthErr}`)
+    .custom(async (categoryName) => {
+      const isDuplicate = await db.existCategoryByName(categoryName);
+      if (isDuplicate) {
+        return Promise.reject(`Category name ${duplicateErr}`);
+      }
+    }),
+];
 
-const validateUpdateCategory = body("categoryName")
-  .trim()
-  .matches(/^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$/gm)
-  .withMessage(`Category ${nameFormatErr}`)
-  .isLength({ min: 1, max: 10 })
-  .withMessage(`Category ${nameLengthErr}`)
-  .custom(async (categoryName, { req }) => {
-    const categoryId = req.params!.categoryId;
-    const isDuplicate = await db.existCategoryByNameNotId(
-      categoryName,
-      categoryId,
-    );
-    if (isDuplicate) {
-      return Promise.reject(`Category name ${duplicateErr}`);
-    }
-  });
+const validateUpdateCategory = [
+  body("categoryName")
+    .trim()
+    .matches(/^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$/gm)
+    .withMessage(`Category ${nameFormatErr}`)
+    .isLength({ min: 1, max: 10 })
+    .withMessage(`Category ${nameLengthErr}`)
+    .custom(async (categoryName, { req }) => {
+      const categoryId = req.params!.categoryId;
+      const isDuplicate = await db.existCategoryByNameNotId(
+        categoryName,
+        categoryId,
+      );
+      if (isDuplicate) {
+        return Promise.reject(`Category name ${duplicateErr}`);
+      }
+    }),
+];
 
 const validateNewProduct = [
   body("categoryId"),
@@ -87,8 +92,8 @@ const validateNewOption = [
     .trim()
     .matches(/^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$/gm)
     .withMessage(`Option ${nameFormatErr}`)
-    .isLength({ min: 1, max: 10 })
-    .withMessage(`Option ${nameLengthErr}`)
+    .isLength({ min: 1, max: 20 })
+    .withMessage(`Option ${optionNameLengthErr}`)
     .custom(async (optionName) => {
       const isDuplicate = await db.existOptionByName(optionName);
       if (isDuplicate) {
@@ -104,8 +109,8 @@ const validateUpdateOption = [
     .trim()
     .matches(/^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$/gm)
     .withMessage(`Option ${nameFormatErr}`)
-    .isLength({ min: 1, max: 10 })
-    .withMessage(`Option ${nameLengthErr}`)
+    .isLength({ min: 1, max: 20 })
+    .withMessage(`Option ${optionNameLengthErr}`)
     .custom(async (optionName, { req }) => {
       const optionId = Number(req.params!.optionId);
       const isDuplicate = await db.existOptionByNameNotId(optionName, optionId);
