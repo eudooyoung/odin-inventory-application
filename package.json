@@ -20,7 +20,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm install && tsc && cp -r src/views dist/",
+    "build": "npm install && tsc && cp -r src/views dist/ && cp -r src/public dist/",
     "start": "node dist/app.js",
     "populate": "tsx --env-file=.env src/db/populate.ts",
     "dev": "tsx --watch --env-file=.env src/app.ts"
