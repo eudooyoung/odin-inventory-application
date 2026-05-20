@@ -5,15 +5,13 @@
   </section>
   <section class="form-wrapper">
     <h3>New Option</h3>
-    <div>
-      <form action="/option/new" method="post">
-        <label for="option-name">Name: </label>
-        <input type="text" name="option-name" id="option-name" value="<%= locals.prev && prev.optionName %>" required />
-        <label for="option-price">Price: </label>
-        <input type="number" name="option-price" id="option-price" value="<%= locals.prev && prev.optionPrice %>" required>
-        <button type="submit">Create</button>
-      </form>
-    </div>
+    <form action="/option/new" method="post">
+      <label for="option-name">Name: </label>
+      <input type="text" name="option-name" id="option-name" value="<%= locals.prev && prev.optionName %>" required />
+      <label for="option-price">Price: </label>
+      <input type="number" name="option-price" id="option-price" value="<%= locals.prev && prev.optionPrice %>" required>
+      <button type="submit">Create</button>
+    </form>
   </section>
   <%- include("../errors/option-errors") %>
 </main>
