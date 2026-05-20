@@ -36,6 +36,7 @@ const optionDetailGet: types.Middleware = async (req, res) => {
     route: { ...res.locals.route, to: "detail" },
     options: options,
     option: option,
+    adminPw: process.env.ADMIN_PW,
   });
 };
 
@@ -47,6 +48,7 @@ const updateOptionGet: types.Middleware = async (req, res) => {
     route: { ...res.locals.route, to: "update" },
     options: options,
     option: option,
+    adminPw: process.env.ADMIN_PW,
   });
 };
 
@@ -60,6 +62,7 @@ const updateOptionPostMiddleware: types.Middleware = async (req, res) => {
       route: { ...res.locals.route, to: "update" },
       options: options,
       option: option,
+      adminPw: process.env.ADMIN_PW,
       optionErrors: errors.array(),
       prev: converter.prevBodyCaseConverter(req.body),
     });

@@ -2,7 +2,6 @@ import type types = require("../utils/types");
 import db = require("../db/queries");
 import vr = require("../utils/validate-rules");
 import v = require("express-validator");
-import jsConvert = require("js-convert-case");
 import converter = require("../utils/case-converter");
 
 const productGet: types.Middleware = async (req, res) => {
@@ -55,6 +54,7 @@ const productDetailGet: types.Middleware = async (req, res) => {
     product: product,
     categoryName: categoryName,
     options: options,
+    adminPw: process.env.ADMIN_PW,
   });
 };
 
@@ -75,6 +75,7 @@ const updateProductGet: types.Middleware = async (req, res) => {
     categories: categories,
     options: options,
     productOptionIds: productOptionIds,
+    adminPw: process.env.ADMIN_PW,
   });
 };
 
@@ -97,6 +98,7 @@ const updateProductMiddleware: types.Middleware = async (req, res) => {
       categories: categories,
       options: options,
       productOptionIds: productOptionIds,
+      adminPw: process.env.ADMIN_PW,
       productErrors: errors.array(),
     });
   }

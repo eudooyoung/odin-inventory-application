@@ -2,7 +2,7 @@
   <h2>Option detail</h2>
   <div class="buttons">
     <form action="/option/<%= option.optionId %>/delete" method="post">
-      <button class="delete" type="submit" onclick="return confirm('Are you sure?');">
+      <button class="delete" type="submit" onclick="return prompt('Enter admin pw.') === '<%= adminPw %>';">
         Delete
       </button>
     </form>

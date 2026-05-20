@@ -40,6 +40,7 @@ const categoryDetailGet: types.Middleware = async (req, res) => {
     categories: categories,
     category: category,
     products: products,
+    adminPw: process.env.ADMIN_PW,
   });
 };
 
@@ -53,6 +54,7 @@ const updateCategoryGet: types.Middleware = async (req, res) => {
     categories: categories,
     category: category,
     products: products,
+    adminPw: process.env.ADMIN_PW,
   });
 };
 
@@ -68,6 +70,7 @@ const updateCategoryPostMiddleware: types.Middleware = async (req, res) => {
       categories: categories,
       category: category,
       products: products,
+      adminPw: process.env.ADMIN_PW,
       categoryErrors: errors.array(),
       prev: converter.prevBodyCaseConverter(req.body),
     });

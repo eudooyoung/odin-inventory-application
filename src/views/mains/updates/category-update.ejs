@@ -5,7 +5,7 @@
       <a href="/category/<%= category.categoryId %>" style="text-decoration: none">
         <button type="button">Cancel</button>
       </a>
-      <button type="submit">Save</button>
+      <button type="submit" onclick="return prompt('Enter admin pw.') === '<%= adminPw %>';">Save</button>
     </div>
     <p>
       <label for="category-name">Category name:</label>

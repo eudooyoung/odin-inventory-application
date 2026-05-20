@@ -5,7 +5,7 @@
       <a href="/product/<%= product.productId %>">
         <button type="button">Cancel</button>
       </a>
-      <button type="submit">Save</button>
+      <button type="submit" onclick="return prompt('Enter admin pw.') === '<%= adminPw %>';">Save</button>
     </div>
     <p>
       <label for="product-name">Product name:</label>
