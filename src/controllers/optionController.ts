@@ -29,9 +29,11 @@ const newOptionPostMiddleware: types.Middleware = async (req, res) => {
 const newOptionPost = [...vr.validateNewOption, newOptionPostMiddleware];
 
 const optionDetailGet: types.Middleware = async (req, res) => {
-  const options = await db.getAllOptions();
   const optionId = Number(req.params.optionId);
-  const option = await db.getOptionById(optionId);
+  const [options, option] = await Promise.all([
+    db.getAllOptions(),
+    db.getOptionById(optionId),
+  ]);
   res.render("index", {
     route: { ...res.locals.route, to: "detail" },
     options: options,
@@ -41,9 +43,11 @@ const optionDetailGet: types.Middleware = async (req, res) => {
 };
 
 const updateOptionGet: types.Middleware = async (req, res) => {
-  const options = await db.getAllOptions();
   const optionId = Number(req.params.optionId);
-  const option = await db.getOptionById(optionId);
+  const [options, option] = await Promise.all([
+    db.getAllOptions(),
+    db.getOptionById(optionId),
+  ]);
   res.render("index", {
     route: { ...res.locals.route, to: "update" },
     options: options,
@@ -56,8 +60,10 @@ const updateOptionPostMiddleware: types.Middleware = async (req, res) => {
   const optionId = Number(req.params.optionId);
   const errors = v.validationResult(req);
   if (!errors.isEmpty()) {
-    const options = await db.getAllOptions();
-    const option = await db.getOptionById(optionId);
+    const [options, option] = await Promise.all([
+      db.getAllOptions(),
+      db.getOptionById(optionId),
+    ]);
     return res.status(400).render("index", {
       route: { ...res.locals.route, to: "update" },
       options: options,

@@ -5,9 +5,11 @@ import v = require("express-validator");
 import converter = require("../utils/case-converter");
 
 const productGet: types.Middleware = async (req, res) => {
-  const categories = await db.getAllCategories();
-  const products = await db.getAllProducts();
-  const options = await db.getAllOptions();
+  const [categories, products, options] = await Promise.all([
+    db.getAllCategories(),
+    db.getAllProducts(),
+    db.getAllOptions(),
+  ]);
   res.render("index", {
     products: products,
     categories: categories,
@@ -18,9 +20,11 @@ const productGet: types.Middleware = async (req, res) => {
 const newProductPostMiddleware: types.Middleware = async (req, res) => {
   const errors = v.validationResult(req);
   if (!errors.isEmpty()) {
-    const categories = await db.getAllCategories();
-    const products = await db.getAllProducts();
-    const options = await db.getAllOptions();
+    const [categories, products, options] = await Promise.all([
+      db.getAllCategories(),
+      db.getAllProducts(),
+      db.getAllOptions(),
+    ]);
     return res.status(400).render("index", {
       products: products,
       categories: categories,
@@ -41,13 +45,15 @@ const newProductPostMiddleware: types.Middleware = async (req, res) => {
 const newProductPost = [...vr.validateNewProduct, newProductPostMiddleware];
 
 const productDetailGet: types.Middleware = async (req, res) => {
-  const products = await db.getAllProducts();
   const productId = Number(req.params.productId);
-  const product = await db.getProductById(productId);
-  const { categoryName } = (await db.getCategoryNameByProductId(productId)) as {
-    categoryName: string;
-  };
-  const options = await db.getOptionsByProductId(productId);
+  const [products, product, { categoryName }, options] = await Promise.all([
+    db.getAllProducts(),
+    db.getProductById(productId),
+    (await db.getCategoryNameByProductId(productId)) as {
+      categoryName: string;
+    },
+    db.getOptionsByProductId(productId),
+  ]);
   res.render("index", {
     route: { ...res.locals.route, to: "detail" },
     products: products,
@@ -59,12 +65,15 @@ const productDetailGet: types.Middleware = async (req, res) => {
 };
 
 const updateProductGet: types.Middleware = async (req, res) => {
-  const products = await db.getAllProducts();
   const productId = Number(req.params.productId);
-  const product = await db.getProductById(productId);
-  const categories = await db.getAllCategories();
-  const options = await db.getAllOptions();
-  const productOptions = await db.getOptionsByProductId(productId);
+  const [products, product, categories, options, productOptions] =
+    await Promise.all([
+      db.getAllProducts(),
+      db.getProductById(productId),
+      db.getAllCategories(),
+      db.getAllOptions(),
+      db.getOptionsByProductId(productId),
+    ]);
   const productOptionIds = productOptions.map(
     (option: { optionId: string }) => option.optionId,
   );
@@ -83,11 +92,14 @@ const updateProductMiddleware: types.Middleware = async (req, res) => {
   const productId = Number(req.params.productId);
   const errors = v.validationResult(req);
   if (!errors.isEmpty()) {
-    const products = await db.getAllProducts();
-    const product = await db.getProductById(productId);
-    const categories = await db.getAllCategories();
-    const options = await db.getAllOptions();
-    const productOptions = await db.getOptionsByProductId(productId);
+    const [products, product, categories, options, productOptions] =
+      await Promise.all([
+        db.getAllProducts(),
+        db.getProductById(productId),
+        db.getAllCategories(),
+        db.getAllOptions(),
+        db.getOptionsByProductId(productId),
+      ]);
     const productOptionIds = productOptions.map(
       (option: { optionId: string }) => option.optionId,
     );
