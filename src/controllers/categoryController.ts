@@ -15,10 +15,8 @@ const newCategoryPostMiddleware: types.Middleware = async (req, res) => {
   const errors = v.validationResult(req);
   if (!errors.isEmpty()) {
     const categories = await db.getAllCategories();
-    const products = await db.getAllProducts();
     return res.status(400).render("index", {
       categories: categories,
-      products: products,
       categoryErrors: errors.array(),
       prev: converter.prevBodyCaseConverter(req.body),
     });
@@ -31,10 +29,12 @@ const newCategoryPostMiddleware: types.Middleware = async (req, res) => {
 const newCategoryPost = [...vr.validateNewCategory, newCategoryPostMiddleware];
 
 const categoryDetailGet: types.Middleware = async (req, res) => {
-  const categories = await db.getAllCategories();
   const categoryId = Number(req.params.categoryId);
-  const category = await db.getCategoryById(categoryId);
-  const products = await db.getProductsByCategoryId(categoryId);
+  const [categories, category, products] = await Promise.all([
+    db.getAllCategories(),
+    db.getCategoryById(categoryId),
+    db.getProductsByCategoryId(categoryId),
+  ]);
   res.render("index", {
     route: { ...res.locals.route, to: "detail" },
     categories: categories,
@@ -45,10 +45,12 @@ const categoryDetailGet: types.Middleware = async (req, res) => {
 };
 
 const updateCategoryGet: types.Middleware = async (req, res) => {
-  const categories = await db.getAllCategories();
   const categoryId = Number(req.params.categoryId);
-  const category = await db.getCategoryById(categoryId);
-  const products = await db.getProductsByCategoryId(categoryId);
+  const [categories, category, products] = await Promise.all([
+    db.getAllCategories(),
+    db.getCategoryById(categoryId),
+    db.getProductsByCategoryId(categoryId),
+  ]);
   res.render("index", {
     route: { ...res.locals.route, to: "update" },
     categories: categories,
@@ -62,9 +64,11 @@ const updateCategoryPostMiddleware: types.Middleware = async (req, res) => {
   const categoryId = Number(req.params.categoryId);
   const errors = v.validationResult(req);
   if (!errors.isEmpty()) {
-    const categories = await db.getAllCategories();
-    const category = await db.getCategoryById(categoryId);
-    const products = await db.getProductsByCategoryId(categoryId);
+    const [categories, category, products] = await Promise.all([
+      db.getAllCategories(),
+      db.getCategoryById(categoryId),
+      db.getProductsByCategoryId(categoryId),
+    ]);
     return res.status(400).render("index", {
       route: { ...res.locals.route, to: "update" },
       categories: categories,
